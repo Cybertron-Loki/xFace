@@ -9,6 +9,7 @@ redis:
   ip: 192.168.30.128
   port: 6379
   password: qwert
+  database: 1
 es:
   ip: 192.168.30.128
   port: 9200

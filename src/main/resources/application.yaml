@@ -9,6 +9,7 @@ redis:
   ip: 192.168.1.1
   port: 6379
   password: 123456
+  database: 1
 es:
   ip: 192.168.1.1
   port: 9200
@@ -37,7 +38,7 @@ spring:
     password: ${mysql.password}
   # Redis 配置
   redis:
-    database: 1
+    database: ${redis.database}
     host: ${redis.ip}
     port: ${redis.port}
     timeout: 5000
