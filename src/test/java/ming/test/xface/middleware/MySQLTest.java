@@ -1,4 +1,4 @@
-package ming.test.xface.dao;
+package ming.test.xface.middleware;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +11,9 @@ import org.springframework.test.context.ActiveProfiles;
 
 import javax.annotation.Resource;
 
+/**
+ * MySQL 测试
+ */
 @Slf4j
 @SpringBootTest
 @ActiveProfiles("dev")
