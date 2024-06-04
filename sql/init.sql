@@ -1,15 +1,126 @@
-CREATE
-    DATABASE IF NOT EXISTS `xface`;
+DROP DATABASE IF EXISTS `xface`;
+CREATE DATABASE IF NOT EXISTS `xface`;
+
 USE `xface`;
-drop table if exists user;
-CREATE TABLE IF NOT EXISTS `user`
+
+DROP TABLE IF EXISTS `User`;
+
+CREATE TABLE `User`
 (
-    `id`       INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `username` VARCHAR(255)        NOT NULL,
-    `nickname` VARCHAR(255)        NOT NULL,
-    `account`  VARCHAR(255)        NOT NULL,
-    `password` VARCHAR(255)        NOT NULL,
-    `avatar`   VARCHAR(255) DEFAULT 'http://hebei.sinaimg.cn/2013/0913/U7459P1275DT20130913150426.jpg',
-    `role`     VARCHAR(255) DEFAULT 'user',
-    `isDelete` TINYINT(1)   DEFAULT 0
-);
+    `id`         int(11)      NOT NULL AUTO_INCREMENT COMMENT '用户唯一标识',
+    `username`   varchar(255) NOT NULL COMMENT '用户名',
+    `password`   varchar(255) NULL COMMENT '登录密码',
+    `phoneNum`   varchar(255) NOT NULL COMMENT '手机号码',
+    `role`       varchar(128) NOT NULL DEFAULT 'user' COMMENT '用户角色 user-普通用户 admin-管理员等',
+    `status`     int(11)      NOT NULL DEFAULT 0 COMMENT '用户状态 0-正常 1-禁用等',
+    `avatar`     varchar(255) NULL COMMENT '用户头像',
+    `createTime` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updateTime` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (id)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  DEFAULT CHARSET = utf8 COMMENT = '用户表';
+
+DROP TABLE IF EXISTS `Friendship`;
+
+CREATE TABLE `Friendship`
+(
+    `userId`         INT(11)      NOT NULL COMMENT '用户id',
+    `friendId`       INT(11)      NOT NULL COMMENT '好友id',
+    `friendName`     VARCHAR(255) NOT NULL COMMENT '好友名称',
+    `friendNickName` VARCHAR(255) NULL COMMENT '好友昵称',
+    `friendStatus`   int(11)      NOT NULL DEFAULT 0 COMMENT '好友状态 0-正常 1-禁用等',
+    `status`         int(11)      NOT NULL DEFAULT 0 COMMENT '好友关系状态 0-正常 1-禁用等',
+    `createTime`     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updateTime`     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`userId`, `friendId`),
+    FOREIGN KEY (`userId`) REFERENCES `User` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`friendId`) REFERENCES `User` (`id`) ON DELETE CASCADE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  DEFAULT CHARSET = utf8 COMMENT = '友情状态存疑表';
+
+DROP TABLE IF EXISTS `Group`;
+
+CREATE TABLE `Group`
+(
+    `id`         INT(11)      NOT NULL AUTO_INCREMENT COMMENT '群组id',
+    `name`       VARCHAR(255) NOT NULL COMMENT '群组名称',
+    `creatorId`  INT(11)      NOT NULL COMMENT '创建者id',
+    `status`     int(11)      NOT NULL DEFAULT 0 COMMENT '群组状态 0-正常 1-禁用等',
+    `createTime` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updateTime` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`creatorId`) REFERENCES `User` (`id`) ON DELETE CASCADE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  DEFAULT CHARSET = utf8 COMMENT = '群聊信息表';
+
+DROP TABLE IF EXISTS `GroupMember`;
+
+CREATE TABLE `GroupMember`
+(
+    `groupId`    INT(11)  NOT NULL COMMENT '群组id',
+    `userId`     INT(11)  NOT NULL COMMENT '用户id',
+    `status`     int(11)  NOT NULL DEFAULT 0 COMMENT '群组状态 0-正常 1-禁用等',
+    `createTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updateTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`groupId`, `userId`),
+    FOREIGN KEY (`groupId`) REFERENCES `Group` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`userId`) REFERENCES `User` (`id`) ON DELETE CASCADE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  DEFAULT CHARSET = utf8 COMMENT = '群成员信息表';
+
+DROP TABLE IF EXISTS `Message`;
+
+-- 待定 不确定
+CREATE TABLE `Message`
+(
+    `id`             INT(11)      NOT NULL AUTO_INCREMENT COMMENT '消息id',
+    `conversationId` VARCHAR(255) NOT NULL COMMENT '会话id 私聊/群聊',
+    `senderId`       INT(11)      NOT NULL COMMENT '发送者id',
+    `receiverId`     INT(11)      NULL COMMENT '接收者id 空为群聊信息，非空为私聊信息',
+    `content`        TEXT         NOT NULL COMMENT '消息内容',
+    `type`           VARCHAR(255) NOT NULL COMMENT '消息类型 text/image/file/video/audio/etc',
+    `createTime`     DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`senderId`) REFERENCES `User` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`receiverId`) REFERENCES `User` (`id`) ON DELETE CASCADE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  DEFAULT CHARSET = utf8 COMMENT = '消息表';
+
+DROP TABLE IF EXISTS `diary`;
+-- TODO 未设置隐私范围
+CREATE TABLE `diary`
+(
+    `id`         INT(11)      NOT NULL AUTO_INCREMENT COMMENT '日记id',
+    `userId`     INT(11)      NOT NULL COMMENT '用户id',
+    -- 是否需要创建类别表 进行外键相连
+    `type`       VARCHAR(255) NOT NULL COMMENT '日记类型',
+    `title`      VARCHAR(255) NOT NULL COMMENT '日记标题',
+    `content`    TEXT         NOT NULL COMMENT '日记内容',
+    `createTime` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updateTime` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`userId`) REFERENCES `User` (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  DEFAULT CHARSET = utf8 COMMENT = '日记表';
+
+DROP TABLE IF EXISTS `comment`;
+
+CREATE TABLE `comment`
+(
+    `id`         INT(11) NOT NULL AUTO_INCREMENT COMMENT '评论id',
+    `userId`     INT(11) NOT NULL COMMENT '用户id',
+    `diaryId`    INT(11) NOT NULL COMMENT '日记id',
+    `parentId`   INT(11)  DEFAULT -1 COMMENT '父评论id',
+    `content`    TEXT    NOT NULL COMMENT '评论内容',
+    `createTime` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updateTime` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 2
+  DEFAULT CHARSET = utf8 COMMENT = '评论表';
