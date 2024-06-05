@@ -1,5 +1,8 @@
 package ming.test.xface.enity.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -7,43 +10,30 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 用户表
+ * 群聊信息表
  *
- * @TableName User
+ * @TableName Group
  */
-@TableName(value = "User")
+@TableName(value = "Group")
 @Data
-public class User implements Serializable {
+public class Group implements Serializable {
     private static final long serialVersionUID = 1L;
-
     /**
-     * 用户名
-     */
-    private String username;
-    /**
-     * 用户唯一标识
+     * 群组id
      */
     private Integer id;
     /**
-     * 登录密码
+     * 群组名称
      */
-    private String password;
+    private String name;
     /**
-     * 手机号码
+     * 创建者id
      */
-    private String phonenum;
+    private Integer creatorid;
     /**
-     * 用户角色 user-普通用户 admin-管理员等
-     */
-    private String role;
-    /**
-     * 用户状态 0-正常 1-禁用等
+     * 群组状态 0-正常 1-禁用等
      */
     private Integer status;
-    /**
-     * 用户头像
-     */
-    private String avatar;
     /**
      * 创建时间
      */
@@ -52,6 +42,10 @@ public class User implements Serializable {
      * 更新时间
      */
     private Date updatetime;
+    /**
+     * 族群类别，默认0-朋友群，1-家庭群，2-同事群 ...
+     */
+    private Integer type;
 
     @Override
     public boolean equals(Object that) {
@@ -64,16 +58,14 @@ public class User implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        User other = (User) that;
+        Group other = (Group) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
-                && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
-                && (this.getPhonenum() == null ? other.getPhonenum() == null : this.getPhonenum().equals(other.getPhonenum()))
-                && (this.getRole() == null ? other.getRole() == null : this.getRole().equals(other.getRole()))
+                && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+                && (this.getCreatorid() == null ? other.getCreatorid() == null : this.getCreatorid().equals(other.getCreatorid()))
                 && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-                && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()))
                 && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()))
-                && (this.getUpdatetime() == null ? other.getUpdatetime() == null : this.getUpdatetime().equals(other.getUpdatetime()));
+                && (this.getUpdatetime() == null ? other.getUpdatetime() == null : this.getUpdatetime().equals(other.getUpdatetime()))
+                && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()));
     }
 
     @Override
@@ -81,14 +73,12 @@ public class User implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
-        result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
-        result = prime * result + ((getPhonenum() == null) ? 0 : getPhonenum().hashCode());
-        result = prime * result + ((getRole() == null) ? 0 : getRole().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getCreatorid() == null) ? 0 : getCreatorid().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
-        result = prime * result + ((getAvatar() == null) ? 0 : getAvatar().hashCode());
         result = prime * result + ((getCreatetime() == null) ? 0 : getCreatetime().hashCode());
         result = prime * result + ((getUpdatetime() == null) ? 0 : getUpdatetime().hashCode());
+        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         return result;
     }
 
@@ -98,14 +88,12 @@ public class User implements Serializable {
                 " [" +
                 "Hash = " + hashCode() +
                 ", id=" + id +
-                ", username=" + username +
-                ", password=" + password +
-                ", phonenum=" + phonenum +
-                ", role=" + role +
+                ", name=" + name +
+                ", creatorid=" + creatorid +
                 ", status=" + status +
-                ", avatar=" + avatar +
                 ", createtime=" + createtime +
                 ", updatetime=" + updatetime +
+                ", type=" + type +
                 ", serialVersionUID=" + serialVersionUID +
                 "]";
         return sb;

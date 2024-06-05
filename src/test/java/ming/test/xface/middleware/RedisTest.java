@@ -3,12 +3,9 @@ package ming.test.xface.middleware;
 import lombok.extern.slf4j.Slf4j;
 import ming.test.xface.enity.pojo.User;
 import org.junit.jupiter.api.Test;
-import org.redisson.Redisson;
 import org.redisson.api.RBucket;
-import org.redisson.api.RBuckets;
 import org.redisson.api.RList;
 import org.redisson.api.RedissonClient;
-import org.redisson.client.RedisClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
