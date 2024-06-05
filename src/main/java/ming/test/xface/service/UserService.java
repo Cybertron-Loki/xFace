@@ -1,14 +1,10 @@
 package ming.test.xface.service;
 
-import ming.test.xface.enity.pojo.User;
-
 /**
- * 用户服务
+ * @author XiaoMing
+ * @description 针对表【User(用户表)】的数据库操作Service
+ * @createDate 2024-06-05 20:48:03
  */
 public interface UserService {
-
-    User getUserById(Integer id);
-
-    Integer addUser(User user);
 
 }
