@@ -1,5 +1,7 @@
 package ming.test.xface.middleware;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import ming.test.xface.constant.RegexConstant;
 import ming.test.xface.dao.UserMapper;
@@ -10,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,5 +34,13 @@ public class MySQLTest {
 
         Matcher matcher = Pattern.compile(RegexConstant.PHONE_NUM).matcher(tmpUser.getPhonenum());
         Assertions.assertTrue(matcher.matches());
+    }
+
+    @Test
+    void UserPageTest() {
+        PageHelper.startPage(2, 21);
+        List<UserVO> userVoList = userMapper.allUserInfo();
+        Page<?> bean = (Page<?>) userVoList;
+        System.out.println(bean.getResult());
     }
 }
