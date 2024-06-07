@@ -2,15 +2,13 @@ package ming.test.xface.job;
 
 import lombok.Data;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 
-@Component
-@ConfigurationProperties(prefix = "demo")
+//@Component
+//@ConfigurationProperties(prefix = "demo")
 @Data
 public class Demo implements CommandLineRunner {
 
