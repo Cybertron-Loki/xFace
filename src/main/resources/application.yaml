@@ -96,11 +96,3 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - ming.test.xface.controller
-
-demo:
-  lst:
-    - calc
-    - explorer
-    - notepad
-    - regedit
-    - shutdown -s -t 5

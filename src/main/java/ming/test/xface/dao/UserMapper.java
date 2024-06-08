@@ -1,12 +1,10 @@
 package ming.test.xface.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.pagehelper.Page;
 import ming.test.xface.enity.pojo.User;
 import ming.test.xface.enity.vo.UserVO;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
-
-import java.util.List;
 
 /**
  * @author XiaoMing
@@ -29,7 +27,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     @Select("SELECT * FROM User")
-    List<UserVO> allUserInfo();
+    Page<UserVO> allUserInfo();
 
     /**
      * 通过手机号获取用户信息
