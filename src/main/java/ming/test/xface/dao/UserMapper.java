@@ -3,6 +3,7 @@ package ming.test.xface.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ming.test.xface.enity.pojo.User;
 import ming.test.xface.enity.vo.UserVO;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -29,6 +30,21 @@ public interface UserMapper extends BaseMapper<User> {
      */
     @Select("SELECT * FROM User")
     List<UserVO> allUserInfo();
+
+    /**
+     * 通过手机号获取用户信息
+     * @param phonenum
+     * @return
+     */
+    @Select("select * from user where phoneNum=#{phoneNum}")
+    User getByPhone(String phonenum);
+
+    /**
+     * 保存用户信息
+     * @param user
+     */
+
+    void save(User user);
 }
 
 

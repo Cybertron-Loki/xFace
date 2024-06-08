@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -31,7 +32,7 @@ public class User implements Serializable {
     /**
      * 手机号码
      */
-    private String phonenum;
+    private String phoneNum;
     /**
      * 用户角色 user-普通用户 admin-管理员等
      */
@@ -47,11 +48,11 @@ public class User implements Serializable {
     /**
      * 创建时间
      */
-    private Date createtime;
+    private LocalDateTime createtime;
     /**
      * 更新时间
      */
-    private Date updatetime;
+    private LocalDateTime updatetime;
 
     @Override
     public boolean equals(Object that) {
@@ -68,7 +69,7 @@ public class User implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
                 && (this.getUsername() == null ? other.getUsername() == null : this.getUsername().equals(other.getUsername()))
                 && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
-                && (this.getPhonenum() == null ? other.getPhonenum() == null : this.getPhonenum().equals(other.getPhonenum()))
+                && (this.getPhoneNum() == null ? other.getPhoneNum() == null : this.getPhoneNum().equals(other.getPhoneNum()))
                 && (this.getRole() == null ? other.getRole() == null : this.getRole().equals(other.getRole()))
                 && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
                 && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()))
@@ -83,7 +84,7 @@ public class User implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getUsername() == null) ? 0 : getUsername().hashCode());
         result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
-        result = prime * result + ((getPhonenum() == null) ? 0 : getPhonenum().hashCode());
+        result = prime * result + ((getPhoneNum() == null) ? 0 : getPhoneNum().hashCode());
         result = prime * result + ((getRole() == null) ? 0 : getRole().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getAvatar() == null) ? 0 : getAvatar().hashCode());
@@ -100,7 +101,7 @@ public class User implements Serializable {
                 ", id=" + id +
                 ", username=" + username +
                 ", password=" + password +
-                ", phonenum=" + phonenum +
+                ", phonenum=" + phoneNum +
                 ", role=" + role +
                 ", status=" + status +
                 ", avatar=" + avatar +

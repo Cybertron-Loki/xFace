@@ -32,7 +32,7 @@ public class MySQLTest {
         Assertions.assertNotNull(tmpUser);
         log.info("获取用户成功 {}", tmpUser);
 
-        Matcher matcher = Pattern.compile(RegexConstant.PHONE_NUM).matcher(tmpUser.getPhonenum());
+        Matcher matcher = Pattern.compile(RegexConstant.PHONE_NUM).matcher(tmpUser.getPhoneNum());
         Assertions.assertTrue(matcher.matches());
     }
 

@@ -20,7 +20,7 @@ public class UserVO implements Serializable {
     /**
      * 手机号码
      */
-    private String phonenum;
+    private String phoneNum;
     /**
      * 用户角色 user-普通用户 admin-管理员等
      */
@@ -41,4 +41,8 @@ public class UserVO implements Serializable {
      * 更新时间
      */
     private Date updatetime;
+    /**
+     * 用户昵称
+     */
+    private String nickName;
 }

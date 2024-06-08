@@ -8,7 +8,7 @@
         <id property="id" column="id" jdbcType="INTEGER"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
-        <result property="phonenum" column="phoneNum" jdbcType="VARCHAR"/>
+        <result property="phoneNum" column="phoneNum" jdbcType="VARCHAR"/>
         <result property="role" column="role" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
@@ -39,6 +39,11 @@
         phoneNum,role,status,
         avatar,createTime,updateTime
     </sql>
+
+    <insert id="save">
+        insert into user (username,password,phoneNum,role,status,avatar,updateTime) values
+        (#{username},#{password},#{phoneNum},#{role},#{status},#{avatar},#{updatetime})
+    </insert>
 
     <select id="getUserById" resultMap="UserVOResultMap">
         SELECT

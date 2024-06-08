@@ -1,5 +1,6 @@
 package ming.test.xface.controller;
 
+import ming.test.xface.enity.dto.Result;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
 
     @RequestMapping("/")
-    public String demo() {
-        return "Hello,xFace!!";
+    public Result demo() {
+        return Result.success("Hello,xFace!!");
     }
+
 }

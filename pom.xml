@@ -121,6 +121,11 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.4.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
+
 
     </dependencies>
     <dependencyManagement>
@@ -132,7 +137,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>1.9.6</version>
+            </dependency>
+
         </dependencies>
+
     </dependencyManagement>
 
     <build>
@@ -147,6 +159,7 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
