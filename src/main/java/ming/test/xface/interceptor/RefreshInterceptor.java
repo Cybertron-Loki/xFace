@@ -31,7 +31,7 @@ public class RefreshInterceptor implements HandlerInterceptor {
     private final StringRedisTemplate stringRedisTemplate;
 
 
-    public RefreshInterceptor(StringRedisTemplate stringRedisTemplate,JWTProperties jwtProperties) {
+    public RefreshInterceptor(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
     }
     @Override
