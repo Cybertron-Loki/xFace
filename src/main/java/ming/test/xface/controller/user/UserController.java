@@ -34,7 +34,7 @@ public class UserController {
     }
 
     /**
-     * 密码登录,判断是否是新用户并注册，生成JWT令牌
+     * 密码登录,判断是否是新用户并注册，生成JWT令牌,存到缓存里
      */
     @PostMapping("/login/psw")
     public Result LoginByPsw(@RequestBody UserLoginDTO userLoginDTO){
