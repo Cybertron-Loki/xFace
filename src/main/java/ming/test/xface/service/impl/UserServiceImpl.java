@@ -3,6 +3,7 @@ package ming.test.xface.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.util.RandomUtil;
+
 import ming.test.xface.dao.UserMapper;
 import ming.test.xface.enity.dto.Result;
 import ming.test.xface.enity.dto.UserLoginDTO;
@@ -14,6 +15,8 @@ import ming.test.xface.utils.RegexUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
+
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -39,6 +42,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
+
     /**
      * 短信登陆
      * @param userLoginDTO
@@ -51,6 +55,7 @@ public class UserServiceImpl implements UserService{
         if(phoneInvalid==true)
             return Result.fail("手机号不对");
 
+
         String code = stringRedisTemplate.opsForValue().get(Login_Code_Key + phonenum);
         if(code==null||!code.equals(userLoginDTO.getCode())){
             return Result.fail("验证码不对，登陆失败");
@@ -58,8 +63,9 @@ public class UserServiceImpl implements UserService{
         //是否注册过
         User user=userMapper.getByPhone(phonenum);
         if(user==null){
-              user=createUser(userLoginDTO);
+            user=createUser(userLoginDTO);
         }
+
 
         String token= UUID.randomUUID().toString();  //给前端发token
         String tokenKey=Login_Token_Key+token;       //后端以hashmap形式存储到缓存
@@ -89,6 +95,8 @@ public class UserServiceImpl implements UserService{
     private User createUser(UserLoginDTO userLoginDTO) {
         User user=new User();
         BeanUtil.copyProperties(userLoginDTO,user);
+        String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userLoginDTO.getPassword()).getBytes());
+        user.setPassword(encryptPassword);
         String userName= UserName_PREFIX+RandomUtil.randomString(10);
         user.setUsername(userName);
         user.setRole("0");
@@ -126,17 +134,19 @@ public class UserServiceImpl implements UserService{
             return Result.fail("手机号不对");
 
         User user=userMapper.getByPhone(phonenum);
-        if(userLoginDTO.getPassword()==null||!(user.getPassword()).equals(userLoginDTO.getPassword())){
-            return Result.fail("密码不对，登陆失败");
-        }
-
         //是否注册过
         if(user==null){
             user=createUser(userLoginDTO);
+            return Result.success("账号注册成功，密码为刚才输入的密码,重新登陆");
         }
-        String token= UUID.randomUUID().toString();  //给前端发token
-        String tokenKey=Login_Password_Key+token;       //后端以hashmap形式存储到缓存
+        String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userLoginDTO.getPassword()).getBytes());
+        if(userLoginDTO.getPassword()==null||!(user.getPassword()).equals(encryptPassword)){
+            return Result.fail("密码不对，登陆失败");
+        }
 
+
+        String token= UUID.randomUUID().toString();  //给前端发token
+        String tokenKey=Login_Password_Key+token;       //后端以hashmap形式存储到缓存，过第二层拦截器
         UserVO userVO = BeanUtil.copyProperties(user, UserVO.class);
         Map<String, Object> userMap = BeanUtil.beanToMap(userVO, new HashMap<>()
                 , CopyOptions.create().setIgnoreNullValue(true)
