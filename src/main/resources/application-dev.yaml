@@ -1,17 +1,26 @@
 # 自定义配置
 mysql:
-  ip: 192.168.30.128
+  ip: localhost
   port: 3306
   database: xface
   username: root
-  password: qwert
+  password: 123456
 redis:
-  ip: 192.168.30.128
+  ip: localhost
   port: 6379
-  password: qwert
+  password:
   database: 1
-es:
-  ip: 192.168.30.128
-  port: 9200
+#es:
+#  ip: 192.168.30.128
+#  port: 9200
+#  username: root
+#  password: qwert
+datasource:
+  driver-class-name: com.mysql.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/xface?useSSL=false&serverTimezone=UTC
   username: root
-  password: qwert
+  password: 123456
+
+server:
+  port: 8089
+  address: 0.0.0.0

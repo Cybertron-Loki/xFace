@@ -1,7 +1,9 @@
 package ming.test.xface.service;
 
 import ming.test.xface.enity.dto.Result;
+import ming.test.xface.enity.dto.UserDTO;
 import ming.test.xface.enity.dto.UserLoginDTO;
+import ming.test.xface.enity.pojo.User;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,4 +19,12 @@ public interface UserService {
     Result sendCode(String phonenum);
 
     Result loginByPsw(UserLoginDTO userLoginDTO);
+
+    Result updateUser(User user);
+
+    Result deleteUser(Integer id);
+
+    Result me();
+
+    void exitUser();
 }

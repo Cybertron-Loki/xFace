@@ -2,6 +2,9 @@ package ming.test.xface.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.pagehelper.Page;
+import ming.test.xface.annotation.AutoFill;
+import ming.test.xface.enity.dto.Result;
+import ming.test.xface.enity.dto.UserDTO;
 import ming.test.xface.enity.pojo.User;
 import ming.test.xface.enity.vo.UserVO;
 import org.apache.ibatis.annotations.Select;
@@ -43,6 +46,10 @@ public interface UserMapper extends BaseMapper<User> {
      */
 
     void save(User user);
+
+
+    @AutoFill("updateUser")
+    void updateUser(User user);
 }
 
 

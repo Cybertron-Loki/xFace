@@ -1,7 +1,9 @@
 package ming.test.xface.enity.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,6 +15,8 @@ import java.util.Date;
  */
 @TableName(value = "blog")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Blog implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
@@ -55,6 +59,8 @@ public class Blog implements Serializable {
      * 所在位置
      */
     private String location;
+
+    private Integer groupId;
 
     @Override
     public boolean equals(Object that) {

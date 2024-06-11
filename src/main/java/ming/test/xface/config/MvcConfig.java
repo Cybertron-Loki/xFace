@@ -1,6 +1,5 @@
 package ming.test.xface.config;
 
-import ming.test.xface.common.JWTProperties;
 import ming.test.xface.interceptor.LoginInterceptor;
 import ming.test.xface.interceptor.RefreshInterceptor;
 import org.springframework.data.redis.core.StringRedisTemplate;

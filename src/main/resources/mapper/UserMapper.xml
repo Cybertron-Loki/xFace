@@ -19,7 +19,7 @@
     <resultMap id="UserVOResultMap" type="ming.test.xface.enity.vo.UserVO">
         <id property="id" column="id" jdbcType="INTEGER"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
-        <result property="phonenum" column="phoneNum" jdbcType="VARCHAR"/>
+        <result property="phoneNum" column="phoneNum" jdbcType="VARCHAR"/>
         <result property="role" column="role" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
@@ -41,9 +41,33 @@
     </sql>
 
     <insert id="save">
-        insert into user (username,password,phoneNum,role,status,avatar,updateTime) values
-        (#{username},#{password},#{phoneNum},#{role},#{status},#{avatar},#{updatetime})
+        insert into user (username,password,phoneNum,avatar) values
+        (#{username},#{password},#{phoneNum},#{avatar})
     </insert>
+    <update id="updateUser">
+        update user
+        <set>
+            <if test="username!=null">
+                username=#{username},
+            </if>
+            <if test="password!=null">
+                password=#{password},
+            </if>
+            <if test="phoneNum!=null">
+                phoneNum=#{phoneNum},
+            </if>
+            <if test="role!=null">
+                 role=#{role},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="avatar!=null">
+                avatar=#{avatar},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 
     <select id="getUserById" resultMap="UserVOResultMap">
         SELECT

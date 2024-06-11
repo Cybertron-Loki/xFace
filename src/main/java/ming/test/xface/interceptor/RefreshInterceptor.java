@@ -3,11 +3,8 @@ package ming.test.xface.interceptor;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
-import io.jsonwebtoken.Claims;
-import ming.test.xface.common.JWTProperties;
+
 import ming.test.xface.enity.dto.UserDTO;
-import ming.test.xface.enity.pojo.User;
-import ming.test.xface.utils.JwtUtil;
 import ming.test.xface.utils.UserHolder;
 import org.elasticsearch.common.collect.HppcMaps;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -48,7 +45,7 @@ public class RefreshInterceptor implements HandlerInterceptor {
             stringRedisTemplate.expire(Login_Token_Key+token,Login_User_TTL, TimeUnit.MINUTES);
         }
         if(!userMap2.isEmpty()) {
-            UserDTO userDTO = BeanUtil.fillBeanWithMap(userMap1, new UserDTO(), false);
+            UserDTO userDTO = BeanUtil.fillBeanWithMap(userMap2, new UserDTO(), false);
             UserHolder.saveUser(userDTO);
             stringRedisTemplate.expire(Login_Password_Key + token, Login_User_TTL, TimeUnit.MINUTES);
         }

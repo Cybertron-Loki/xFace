@@ -150,16 +150,40 @@ CREATE TABLE `blog`
 (
     `id`         INT(11)      NOT NULL AUTO_INCREMENT COMMENT '个人发表的避雷/种草/旅游经验帖子',
     `userId`     INT(11)      NOT NULL COMMENT '用户id',
-    `commentId`  INT(11)      NOT NULL COMMENT '评论id',
+    `commentId`  INT(11)      COMMENT '评论id',
     `createTime` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updateTime` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `type`       VARCHAR(255) NOT NULL COMMENT 'blog类型',
-    `visible`    VARCHAR(255) NOT NULL COMMENT '隐私：先定为公开可见或者仅群内可见或者仅自己可见',
+    `visible`    VARCHAR(255) NOT NULL DEFAULT 'public' COMMENT '隐私：personal 个人可见;public 任何人都可以看;group 群内成员可见',
     `content`    TEXT         NOT NULL COMMENT 'blog内容',
-    `brand_id`   INT(11)      NOT NULL COMMENT '关联商家id（可不填）',
+#     `brand_id`   INT(11)      NOT NULL COMMENT '关联商家id（可不填）',
     `location`   VARCHAR(255) COMMENT '所在位置',
+    `group_id`   INT(11)      COMMENT '群组id',
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`)
+#     FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`group_id`) REFERENCES `Group` (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8 COMMENT = '帖子表';
+
+DROP TABLE IF EXISTS `log_history`;
+CREATE TABLE `log_history`
+(
+    `id`                INT(11) NOT NULL AUTO_INCREMENT COMMENT 'log的id',
+    `userName`          VARCHAR(255) NOT NULL COMMENT 'SEI',
+    `operation_type`    VARCHAR(255) NOT NULL comment '嘎哈了',
+    `operation_time`    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '操作时间',
+    primary key (`id`)
+)ENGINE = InnoDB
+ AUTO_INCREMENT = 1
+ DEFAULT CHARSET = utf8 COMMENT = '操作记录表';
+
+DROP TABLE IF EXISTS `type_blog`;
+CREATE TABLE `type_blog`
+(
+    `id`                INT(11) NOT NULL AUTO_INCREMENT COMMENT 'type的id',
+    `name`              VARCHAR(255) NOT NULL comment '种类名称',
+    primary key (`id`)
+)ENGINE = InnoDB
+ AUTO_INCREMENT = 1
+ DEFAULT CHARSET = utf8 COMMENT = 'blog类型表';

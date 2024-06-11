@@ -20,15 +20,15 @@ public class RedissonConfig {
     private String password;
     private Integer database;
 
-    @Bean
-    public RedissonClient redissonClient() {
-        Config config = new Config();
-        System.out.println("redis ip: " + ip + ", port: " + port);
-        String redisAddress = String.format("redis://%s:%s", ip, port);
-        config.useSingleServer().setAddress(redisAddress).setPassword(password).setDatabase(database);
-//        Config config = Config.fromYAML(new File("config-file.yaml"));
-        RedissonClient redisson = Redisson.create(config);
-        return redisson;
-    }
+//    @Bean
+//    public RedissonClient redissonClient() {
+//        Config config = new Config();
+//        System.out.println("redis ip: " + ip + ", port: " + port);
+//        String redisAddress = String.format("redis://%s:%s", ip, port);
+//        config.useSingleServer().setAddress(redisAddress).setPassword(password).setDatabase(database);
+////        Config config = Config.fromYAML(new File("config-file.yaml"));
+//        RedissonClient redisson = Redisson.create(config);
+//        return redisson;
+//    }
 
 }

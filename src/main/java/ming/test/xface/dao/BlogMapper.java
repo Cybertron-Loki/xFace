@@ -1,7 +1,12 @@
 package ming.test.xface.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import ming.test.xface.enity.dto.Result;
 import ming.test.xface.enity.pojo.Blog;
+import ming.test.xface.enity.pojo.BlogType;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * @author XiaoMing
@@ -10,6 +15,11 @@ import ming.test.xface.enity.pojo.Blog;
  * @Entity ming.test.xface.enity.pojo.Blog
  */
 public interface BlogMapper extends BaseMapper<Blog> {
+   @Select("select * from type_blog ")
+    List<BlogType> listType();
+
+    void addBlog(Blog blog);
+
 
 }
 

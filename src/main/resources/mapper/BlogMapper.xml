@@ -24,4 +24,8 @@
         visible,content,brand_id,
         location
     </sql>
+    <insert id="addBlog">
+        insert into blog  (userId,type,content,location,group_id)
+        values (#{userid},#{type},#{content},#{location},#{groupId})
+    </insert>
 </mapper>

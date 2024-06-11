@@ -1,14 +1,11 @@
-package ming.test.xface.enity.vo;
+package ming.test.xface.enity.dto;
 
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class UserVO implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class UserDTO {
     /**
      * 用户名
      */
@@ -34,11 +31,7 @@ public class UserVO implements Serializable {
      */
     private String avatar;
     /**
-     * 创建时间
+     * 用户昵称
      */
-    private Date createtime;
-    /**
-     * 更新时间
-     */
-    private Date updatetime;
+    private String nickName;
 }
