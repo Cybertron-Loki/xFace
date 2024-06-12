@@ -6,6 +6,7 @@ import ming.test.xface.enity.dto.Result;
 import ming.test.xface.enity.dto.UserDTO;
 import ming.test.xface.enity.dto.UserLoginDTO;
 import ming.test.xface.enity.pojo.User;
+import ming.test.xface.enity.pojo.UserInfo;
 import ming.test.xface.service.UserService;
 import ming.test.xface.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
+
+/**
+ * 设置：修改个人信息，修改用户个人信息
+ */
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -50,11 +55,21 @@ public class UserController {
      * 登录后用户主页,返回个人信息and推荐blog，暂定为推送热点（缓存穿透），关注的人的dairy and blog
      * @return
      */
-    @GetMapping("/me")
+    @GetMapping("/checkMyself")
     public Result mainPage(){
-        return userService.me();
+        return userService.checkMyself();
     }
 
+    /**
+     * 修改个人信息
+     * @param
+     * @return
+     */
+    @PostMapping("/updateMyself")
+    public SaResult updateMyself(@RequestBody UserInfo userInfo){
+
+        return userService.updateMyself(userInfo);
+    }
     /**
      * 修改用户个人信息
      * @return
@@ -91,8 +106,8 @@ public class UserController {
     /**
      * 关注
      */
-    @GetMapping("/follow/{blogId}")
-    public SaResult follow(@PathVariable("blogId") Integer id){
+    @GetMapping("/follow/{Id}")
+    public SaResult follow(@PathVariable("Id") Integer id){
 
         return null;
     }

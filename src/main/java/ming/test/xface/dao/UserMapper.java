@@ -52,9 +52,15 @@ public interface UserMapper extends BaseMapper<User> {
     @AutoFill("updateUser")
     void updateUser(User user);
 
-
+    /**
+     * 获取用户信息
+     * @param id
+     * @return
+     */
     @Select("select * from UserInfo where userId=#{id}")
     UserInfo getUserInfo(Integer id);
+
+    void updateMyself(UserInfo userInfo);
 }
 
 

@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface LogHistoryMapper  {
-    @Insert("INSERT INTO log_history (userName,id,operation_type) values (#{userName},#{id},#{operationType})")
+    @Insert("INSERT INTO Log_History (userName,id,operation_type) values (#{userName},#{id},#{operationType})")
     void insertLog(LogHistory logHistory);
 }

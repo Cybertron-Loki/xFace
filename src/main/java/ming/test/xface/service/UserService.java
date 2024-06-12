@@ -1,11 +1,10 @@
 package ming.test.xface.service;
 
+import cn.dev33.satoken.util.SaResult;
 import ming.test.xface.enity.dto.Result;
-import ming.test.xface.enity.dto.UserDTO;
 import ming.test.xface.enity.dto.UserLoginDTO;
 import ming.test.xface.enity.pojo.User;
-
-import javax.servlet.http.HttpSession;
+import ming.test.xface.enity.pojo.UserInfo;
 
 /**
  * @author XiaoMing
@@ -24,7 +23,9 @@ public interface UserService {
 
     Result deleteUser(Integer id);
 
-    Result me();
+    Result checkMyself();
 
     void exitUser();
+
+    SaResult updateMyself(UserInfo userInfo);
 }

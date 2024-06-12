@@ -1,9 +1,11 @@
 package ming.test.xface.service.impl;
 
+import cn.dev33.satoken.util.SaResult;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.util.RandomUtil;
 
+import ming.test.xface.common.ResultUtils;
 import ming.test.xface.dao.UserMapper;
 import ming.test.xface.enity.dto.Result;
 import ming.test.xface.enity.dto.UserDTO;
@@ -105,6 +107,7 @@ public class UserServiceImpl implements UserService {
         String userName = UserName_PREFIX + RandomUtil.randomString(10);
         user.setUsername(userName);
         userMapper.save(user);
+        //todo：创建userinfo
         return user;
     }
 
@@ -191,7 +194,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result me() {
+    public Result checkMyself() {
         UserDTO userDTO = UserHolder.getUser();
         Integer id = userDTO.getId();
         UserInfo userInfo = userMapper.getUserInfo(id);
@@ -201,6 +204,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void exitUser() {
 
+    }
+
+    @Override
+    public SaResult updateMyself(UserInfo userInfo) {
+         //todo:信息校验
+        userMapper.updateMyself(userInfo);
+        return ResultUtils.success("ok");
     }
 }
 

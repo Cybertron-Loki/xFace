@@ -93,9 +93,9 @@ CREATE TABLE `Message`
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8 COMMENT = '消息表';
 
-DROP TABLE IF EXISTS `diary`;
+DROP TABLE IF EXISTS `Diary`;
 -- TODO 未设置隐私范围
-CREATE TABLE `diary`
+CREATE TABLE `Diary`
 (
     `id`         INT(11)      NOT NULL AUTO_INCREMENT COMMENT '日记id',
     `userId`     INT(11)      NOT NULL COMMENT '用户id',
@@ -112,9 +112,9 @@ CREATE TABLE `diary`
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8 COMMENT = '日记表';
 
-DROP TABLE IF EXISTS `comment`;
+DROP TABLE IF EXISTS `Comment`;
 
-CREATE TABLE `comment`
+CREATE TABLE `Comment`
 (
     `id`         INT(11) NOT NULL AUTO_INCREMENT COMMENT '评论id',
     `userId`     INT(11) NOT NULL COMMENT '用户id',
@@ -129,8 +129,8 @@ CREATE TABLE `comment`
   DEFAULT CHARSET = utf8 COMMENT = '评论表';
 
 
-DROP TABLE IF EXISTS `brand`;
-CREATE TABLE `brand`
+DROP TABLE IF EXISTS `Brand`;
+CREATE TABLE `Brand`
 (
     `id`         INT(11)      NOT NULL AUTO_INCREMENT COMMENT '商家id',
     `name`       VARCHAR(255) NOT NULL COMMENT '商家名/品牌名',
@@ -144,15 +144,15 @@ CREATE TABLE `brand`
 
   DEFAULT CHARSET = utf8 COMMENT = '商家/品牌表';
 
-DROP TABLE IF EXISTS `blog`;
+DROP TABLE IF EXISTS `Blog`;
 
-CREATE TABLE `blog`
+CREATE TABLE `Blog`
 (
     `id`         INT(11)      NOT NULL AUTO_INCREMENT COMMENT '个人发表的避雷/种草/旅游经验帖子',
     `userId`     INT(11)      NOT NULL COMMENT '用户id',
-    `commentId`  INT(11)      COMMENT '评论id',
-    `createTime` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updateTime` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `commentId`  INT(11) COMMENT '评论id',
+    `createTime` DATETIME              DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updateTime` DATETIME              DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `type`       VARCHAR(255) NOT NULL COMMENT 'blog类型',
     `visible`    VARCHAR(255) NOT NULL DEFAULT 'public' COMMENT '隐私：personal 个人可见;public 任何人都可以看;group 群内成员可见',
     `content`    TEXT         NOT NULL COMMENT 'blog内容',
@@ -168,8 +168,8 @@ CREATE TABLE `blog`
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8 COMMENT = '帖子表';
 
-DROP TABLE IF EXISTS `log_history`;
-CREATE TABLE `log_history`
+DROP TABLE IF EXISTS `Log_History`;
+CREATE TABLE `Log_History`
 (
     `id`             INT(11)      NOT NULL AUTO_INCREMENT COMMENT 'log的id',
     `userName`       VARCHAR(255) NOT NULL COMMENT 'SEI',
@@ -180,8 +180,8 @@ CREATE TABLE `log_history`
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8 COMMENT = '操作记录表';
 
-DROP TABLE IF EXISTS `type_blog`;
-CREATE TABLE `type_blog`
+DROP TABLE IF EXISTS `Type_Blog`;
+CREATE TABLE `Type_Blog`
 (
     `id`   INT(11)      NOT NULL AUTO_INCREMENT COMMENT 'type的id',
     `name` VARCHAR(255) NOT NULL comment '种类名称',
