@@ -1,6 +1,7 @@
 package ming.test.xface.controller.user;
 
 
+import cn.dev33.satoken.util.SaResult;
 import ming.test.xface.enity.dto.Result;
 import ming.test.xface.enity.dto.UserDTO;
 import ming.test.xface.enity.dto.UserLoginDTO;
@@ -50,7 +51,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/me")
-    public Result maimPage(){
+    public Result mainPage(){
         return userService.me();
     }
 
@@ -85,6 +86,23 @@ public class UserController {
         //todo:redis remove
         userService.exitUser();
         return Result.success();
+    }
+
+    /**
+     * 关注
+     */
+    @GetMapping("/follow/{blogId}")
+    public SaResult follow(@PathVariable("blogId") Integer id){
+
+        return null;
+    }
+
+    /**
+     * 查看他人主页,根据对方设定隐私级别判断可不可以看
+     */
+    @GetMapping("/checkUserInfo/{id}")
+    public SaResult checkUserInfo(@PathVariable Integer id){
+        return null;
     }
 
 }

@@ -62,6 +62,8 @@ public class Blog implements Serializable {
 
     private Integer groupId;
 
+    private Integer like;
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {

@@ -156,9 +156,11 @@ CREATE TABLE `blog`
     `type`       VARCHAR(255) NOT NULL COMMENT 'blog类型',
     `visible`    VARCHAR(255) NOT NULL DEFAULT 'public' COMMENT '隐私：personal 个人可见;public 任何人都可以看;group 群内成员可见',
     `content`    TEXT         NOT NULL COMMENT 'blog内容',
-#     `brand_id`   INT(11)      NOT NULL COMMENT '关联商家id（可不填）',
+#   `brand_id`   INT(11)      NOT NULL COMMENT '关联商家id（可不填）',
     `location`   VARCHAR(255) COMMENT '所在位置',
-    `group_id`   INT(11)      COMMENT '群组id',
+    `group_id`   INT(11) COMMENT '群组id(可见范围，可以让哪个群看到）',
+    `like`       INT(11)               DEFAULT 0 COMMENT '点赞数',
+    `title`      VARCHAR(255) NOT NULL COMMENT '标题',
     PRIMARY KEY (`id`),
 #     FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`) ON DELETE CASCADE,
     FOREIGN KEY (`group_id`) REFERENCES `Group` (`id`)
@@ -169,21 +171,55 @@ CREATE TABLE `blog`
 DROP TABLE IF EXISTS `log_history`;
 CREATE TABLE `log_history`
 (
-    `id`                INT(11) NOT NULL AUTO_INCREMENT COMMENT 'log的id',
-    `userName`          VARCHAR(255) NOT NULL COMMENT 'SEI',
-    `operation_type`    VARCHAR(255) NOT NULL comment '嘎哈了',
-    `operation_time`    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '操作时间',
+    `id`             INT(11)      NOT NULL AUTO_INCREMENT COMMENT 'log的id',
+    `userName`       VARCHAR(255) NOT NULL COMMENT 'SEI',
+    `operation_type` VARCHAR(255) NOT NULL comment '嘎哈了',
+    `operation_time` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '操作时间',
     primary key (`id`)
-)ENGINE = InnoDB
- AUTO_INCREMENT = 1
- DEFAULT CHARSET = utf8 COMMENT = '操作记录表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8 COMMENT = '操作记录表';
 
 DROP TABLE IF EXISTS `type_blog`;
 CREATE TABLE `type_blog`
 (
-    `id`                INT(11) NOT NULL AUTO_INCREMENT COMMENT 'type的id',
-    `name`              VARCHAR(255) NOT NULL comment '种类名称',
+    `id`   INT(11)      NOT NULL AUTO_INCREMENT COMMENT 'type的id',
+    `name` VARCHAR(255) NOT NULL comment '种类名称',
     primary key (`id`)
-)ENGINE = InnoDB
- AUTO_INCREMENT = 1
- DEFAULT CHARSET = utf8 COMMENT = 'blog类型表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8 COMMENT = 'blog类型表';
+
+
+DROP TABLE IF EXISTS `Follow`;
+CREATE TABLE `Follow`
+(
+    `id`           INT(11)  NOT NULL AUTO_INCREMENT COMMENT 'type的id',
+    `userId`       INT(11)  NOT NULL comment '被关注的用户id',
+    `userFollowId` INT(11)  NOT NULL comment '被关注的用户id',
+    `createTime`   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '操作时间',
+    primary key (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8 COMMENT = '关注用户表';
+
+
+DROP TABLE IF EXISTS `UserInfo`;
+CREATE TABLE `UserInfo`
+(
+    `userId`     INT(11)      NOT NULL AUTO_INCREMENT COMMENT '用户id',
+    `city`       VARCHAR(255) COMMENT '所在城市',
+    `birthDay`   DATETIME comment '生日',
+    `hobby`      VARCHAR(255) comment '爱好',
+    `userName`   VARCHAR(255) NOT NULL comment '用户名',
+    `fans`       INT(11)      NOT NULL default 0 COMMENT '粉丝数',
+    `introduce`  VARCHAR(255) comment '个人描述',
+    `followee`   INT(11)      NOT NULL default 0 COMMENT '关注数',
+    `gender`     CHAR(5)      not null default 'none' comment '性别，默认none，女为’女‘男为‘男',
+    `age`        INT(11)      COMMENT '年龄',
+    `createTime` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updateTime` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    primary key (`userId`)
+)   ENGINE = InnoDB
+    AUTO_INCREMENT = 1
+    DEFAULT CHARSET = utf8 COMMENT = '个人展示页表';

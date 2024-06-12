@@ -41,11 +41,11 @@
     </sql>
 
     <insert id="save">
-        insert into user (username,password,phoneNum,avatar) values
+        insert into User (username,password,phoneNum,avatar) values
         (#{username},#{password},#{phoneNum},#{avatar})
     </insert>
     <update id="updateUser">
-        update user
+        update User
         <set>
             <if test="username!=null">
                 username=#{username},

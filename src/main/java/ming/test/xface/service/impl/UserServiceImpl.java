@@ -9,6 +9,7 @@ import ming.test.xface.enity.dto.Result;
 import ming.test.xface.enity.dto.UserDTO;
 import ming.test.xface.enity.dto.UserLoginDTO;
 import ming.test.xface.enity.pojo.User;
+import ming.test.xface.enity.pojo.UserInfo;
 import ming.test.xface.enity.vo.UserVO;
 import ming.test.xface.service.UserService;
 
@@ -193,8 +194,8 @@ public class UserServiceImpl implements UserService {
     public Result me() {
         UserDTO userDTO = UserHolder.getUser();
         Integer id = userDTO.getId();
-        UserVO userVO = userMapper.getUserById(id);
-        return Result.success(userVO);
+        UserInfo userInfo = userMapper.getUserInfo(id);
+        return Result.success(userInfo);
     }
 
     @Override

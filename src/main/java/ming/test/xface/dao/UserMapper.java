@@ -6,6 +6,7 @@ import ming.test.xface.annotation.AutoFill;
 import ming.test.xface.enity.dto.Result;
 import ming.test.xface.enity.dto.UserDTO;
 import ming.test.xface.enity.pojo.User;
+import ming.test.xface.enity.pojo.UserInfo;
 import ming.test.xface.enity.vo.UserVO;
 import org.apache.ibatis.annotations.Select;
 
@@ -37,7 +38,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param phonenum
      * @return
      */
-    @Select("select * from user where phoneNum=#{phoneNum}")
+    @Select("select * from User where phoneNum=#{phoneNum}")
     User getByPhone(String phonenum);
 
     /**
@@ -50,6 +51,10 @@ public interface UserMapper extends BaseMapper<User> {
 
     @AutoFill("updateUser")
     void updateUser(User user);
+
+
+    @Select("select * from UserInfo where userId=#{id}")
+    UserInfo getUserInfo(Integer id);
 }
 
 
