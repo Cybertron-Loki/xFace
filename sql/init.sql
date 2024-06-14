@@ -118,11 +118,12 @@ CREATE TABLE `Comment`
 (
     `id`         INT(11) NOT NULL AUTO_INCREMENT COMMENT '评论id',
     `userId`     INT(11) NOT NULL COMMENT '用户id',
-    `diaryId`    INT(11) NOT NULL COMMENT '日记id',
+    `diaryId`    INT(11)  COMMENT '日记id',
     `parentId`   INT(11)  DEFAULT -1 COMMENT '父评论id',
     `content`    TEXT    NOT NULL COMMENT '评论内容',
     `createTime` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updateTime` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `blogId`     INT(11)  COMMENT 'blog id',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -150,7 +151,7 @@ CREATE TABLE `Blog`
 (
     `id`         INT(11)      NOT NULL AUTO_INCREMENT COMMENT '个人发表的避雷/种草/旅游经验帖子',
     `userId`     INT(11)      NOT NULL COMMENT '用户id',
-    `commentId`  INT(11) COMMENT '评论id',
+    `commentCount`  INT(11) COMMENT '评论数量',
     `createTime` DATETIME              DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updateTime` DATETIME              DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `type`       VARCHAR(255) NOT NULL COMMENT 'blog类型',
@@ -161,6 +162,7 @@ CREATE TABLE `Blog`
     `group_id`   INT(11) COMMENT '群组id(可见范围，可以让哪个群看到）',
     `like`       INT(11)               DEFAULT 0 COMMENT '点赞数',
     `title`      VARCHAR(255) NOT NULL COMMENT '标题',
+    `images`     VARCHAR(255) NOT NULL COMMENT '图片',
     PRIMARY KEY (`id`),
 #     FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`) ON DELETE CASCADE,
     FOREIGN KEY (`group_id`) REFERENCES `Group` (`id`)
@@ -207,7 +209,7 @@ CREATE TABLE `Follow`
 DROP TABLE IF EXISTS `UserInfo`;
 CREATE TABLE `UserInfo`
 (
-    `userId`     INT(11)      NOT NULL AUTO_INCREMENT COMMENT '用户id',
+    `userId`     INT(11)      NOT NULL  COMMENT '用户id',
     `city`       VARCHAR(255) COMMENT '所在城市',
     `birthDay`   DATETIME comment '生日',
     `hobby`      VARCHAR(255) comment '爱好',
@@ -217,6 +219,7 @@ CREATE TABLE `UserInfo`
     `followee`   INT(11)      NOT NULL default 0 COMMENT '关注数',
     `gender`     CHAR(5)      not null default 'none' comment '性别，默认none，女为’女‘男为‘男',
     `age`        INT(11)      COMMENT '年龄',
+    `mail`       VARCHAR(255) comment '邮箱',
     `createTime` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updateTime` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     primary key (`userId`)

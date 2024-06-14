@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.test.xface.mapper.UserMapper">
+
+
+
+    <sql id="User_Column_List">
+        id
+        ,username,password,
+        phoneNum,role,status,
+        avatar,createTime,updateTime
+    </sql>
+    <sql id="UserVO_Column_List">
+        id
+        ,username,password,
+        phoneNum,role,status,
+        avatar,createTime,updateTime
+    </sql>
+
+    <insert id="save"  useGeneratedKeys="true" keyProperty="id">
+        insert into User (username,password,phoneNum,avatar) values
+        (#{username},#{password},#{phoneNum},#{avatar})
+    </insert>
+
+    <insert id="createProfile" >
+      insert into UserInfo (userId,userName) values (#{id},#{userName})
+
+    </insert>
+    <insert id="follow">
+        insert into Follow  (userId,userFollowId) values (#{userId},#{userFollowId})
+    </insert>
+
+    <update id="updateUser">
+        update User
+        <set>
+            <if test="username!=null">
+                username=#{username},
+            </if>
+            <if test="password!=null">
+                password=#{password},
+            </if>
+            <if test="phoneNum!=null">
+                phoneNum=#{phoneNum},
+            </if>
+            <if test="role!=null">
+                 role=#{role},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="avatar!=null">
+                avatar=#{avatar},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="getUserById" resultMap="UserVOResultMap">
+        SELECT
+        <include refid="UserVO_Column_List"/>
+        FROM User
+        WHERE id = #{id}
+    </select>
+</mapper>
