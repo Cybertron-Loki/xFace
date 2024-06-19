@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.test.xface.mapper.ProductsMapper">
+    <insert id="addProducts">
+        insert into (id,shopId,brandId,images)
+        values(#{id},#{shopId},#{brandId},#{images})
+    </insert>
+</mapper>

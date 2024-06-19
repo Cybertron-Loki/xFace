@@ -4,12 +4,13 @@ package project.test.xface.controller.user;
 import cn.dev33.satoken.util.SaResult;
 import project.test.xface.entity.dto.Result;
 import project.test.xface.entity.dto.UserLoginDTO;
-import project.test.xface.entity.pojo.User;
 import project.test.xface.entity.pojo.UserInfo;
 import project.test.xface.service.UserService;
-import project.test.xface.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -32,11 +33,11 @@ public class UserController {
     }
 
     /**
-     * 发验证码,存到缓存里
+     * 发验证码,存到缓存里 ,验证是更改手机号还是登录(lou)_
      */
     @PostMapping("/sendCode")
-    public Result sendCode(@RequestParam("phone") String phoneNum){
-           return  userService.sendCode(phoneNum);
+    public Result sendCode( String phoneNum,Integer lou){
+           return  userService.sendCode(phoneNum, lou);
     }
 
     /**
@@ -63,19 +64,34 @@ public class UserController {
      * @return
      */
     @PostMapping("/updateMyself")
-    public SaResult updateMyself(@RequestBody UserInfo userInfo){
+    public Result updateMyself(@RequestBody UserInfo userInfo){
 
         return userService.updateMyself(userInfo);
     }
     /**
-     * 修改用户个人信息
+     * 修改密码
      * @return
      */
-    @PostMapping("/update")
-    public Result updateUser(@RequestBody User user){
-      Result result=  userService.updateUser(user);
+    @PostMapping("/updatepsw")
+    public Result updateUserPSW(String password){
+      Result result=  userService.updateUserPSW(password);
       return result;
     }
+
+    /**
+     * 修改手机号，需要前端先发验证码
+     * @param code
+     * @param phoneNum
+     * @return
+     */
+    @PostMapping("/updatephone")
+    public Result updateUserPhone(@RequestParam("code") String code,@RequestParam("phoneNum") String phoneNum){
+        Result result=  userService.updateUserPhone(code,phoneNum);
+        return result;
+    }
+
+
+
 
     /**
      * TODO:管理员只能删本群的成员（踢人），系统管理员可以删任何人，普通用户谁也不能删，群管理表待定
@@ -83,7 +99,7 @@ public class UserController {
      * @return
      */
     @DeleteMapping({"id"})
-    public Result deleteUser(@PathVariable Integer id){
+    public Result deleteUser(@PathVariable Long id){
             return userService.deleteUser(id);
     }
 
@@ -93,18 +109,15 @@ public class UserController {
      * @return
      */
     @GetMapping("/exit")
-    public Result exitById(){
-        UserHolder.removeUser();
-        //todo:redis remove
-        userService.exitUser();
-        return Result.success();
+    public Result exitById(HttpServletRequest request, HttpServletResponse response){
+        return Result.success(userService.exitUser(request,response));
     }
 
     /**
      * 关注
      */
     @GetMapping("/follow")
-    public Result follow( Integer id,Boolean isFollow){
+    public Result follow( Long id,Boolean isFollow){
         return userService.follow(id,isFollow);
     }
 
@@ -112,14 +125,44 @@ public class UserController {
      * 查看他人主页,根据对方设定隐私级别判断可不可以看
      */
     @GetMapping("/checkUserInfo/{id}")
-    public SaResult checkUserInfo(@PathVariable Integer id){
-        return null;
+    public Result checkUserInfo(@PathVariable Long id){
+        return userService.checkUserInfo(id);
     }
 
     @GetMapping("/isFollow/{id}")
-    public Result isFollow(@PathVariable("id") Integer id){
+    public Result isFollow(@PathVariable("id") Long id){
 
         return userService.isFollow(id);
+    }
+
+    /**
+     * 共同关注
+     */
+    @GetMapping("/followCommon/{id}")
+    public Result followCommon(@PathVariable("id") Long userId){
+        return userService.followCommon(userId);
+    }
+
+
+
+    /**
+     * 禁用用户与启用用户(管理员功能)
+     */
+    @GetMapping("/startOtStop")
+    public Result startOrStopUser(Long id,Integer status){
+        return userService.startOrStop(id,status);
+    }
+
+    /**
+     * 禁用用户与启用用户(管理员功能)
+     */
+    @GetMapping("/updateRole")
+    public Result updateRole(Long id,String role){
+        return userService.updateRole(id,role);
+    }
+
+    //todo：清除缓存
+    private void cleanCache(String key){
     }
 
 }

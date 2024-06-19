@@ -19,23 +19,19 @@ public class Comment implements Serializable {
     /**
      * 评论id
      */
-    private Integer id;
+    private Long id;
     /**
      * 用户id
      */
-    private Integer userId;
+    private Long userId;
     /**
      * 日记id
      */
-    private Integer diaryId;
+    private Long diaryId;
     /**
      * blog评论
      */
-    private Integer blogId;
-    /**
-     * 父评论id
-     */
-    private Integer parentId;
+    private Long blogId;
     /**
      * 评论内容
      */

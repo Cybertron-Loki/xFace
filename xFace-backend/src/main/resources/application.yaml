@@ -96,3 +96,9 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - ming.test.xface.controller
+baidu:
+  map:
+    ak: 46r3lr0SYcPqtRebOfl832TWNA1CZ2sr
+    URL: https://api.map.baidu.com/api_region_search/v1/?
+
+

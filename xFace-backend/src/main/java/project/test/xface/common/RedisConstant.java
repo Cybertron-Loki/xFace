@@ -24,4 +24,19 @@ public class RedisConstant {
     public  final static String Follow_User_Key="follow user key:";
 
     public  final static String FollowerUser_Feed_Key="follower id key:";
+
+    public  final static String FollowCommon_Key="follow common key:";
+
+    public  final static String Update_User_Phone_Key="phone update key:";
+
+    public  final static String BrandVO_KEY="brandVO key:";
+
+    public  final static String Brand_KEY="brand key:";
+
+    public  final static Long BrandVO_KEY_TTL=90L;
+
+    public  final static String SHOPVO_KEY="shop key:";
+
+    public  final static Long SHOPVO_KEY_TTL=90L;
+
 }

@@ -27,7 +27,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param id 用户唯一标识
      * @return
      */
-    UserVO getUserById(Integer id);
+    UserVO getUserById(Long id);
 
     /**
      * 测试获取所有用户信息
@@ -50,11 +50,11 @@ public interface UserMapper extends BaseMapper<User> {
      * @param user
      */
 
-    Integer save(User user);
+    void save(User user);
 
 
-    @AutoFill("updateUser")
-    void updateUser(User user);
+//    @AutoFill("updateUser")
+    boolean updateUser(User user);
 
     /**
      * 获取用户信息
@@ -62,25 +62,27 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     @Select("select * from UserInfo where userId=#{id}")
-    UserInfo getUserInfo(Integer id);
+    UserInfo getUserInfo(Long id);
 
     void updateMyself(UserInfo userInfo);
 
-    void createProfile(Integer id,String userName);
+    void createProfile(Long userId,String userName);
 
 
     Boolean follow(Follow follow);
 
 
     @Delete("delete from  Follow where userId=#{id} and userFollowId=#{followerId}")
-    boolean unFollow(Integer id, Integer followerId);
+    boolean unFollow(Long id, Long followerId);
 
 
     @Select("SELECT COUNT(*) FROM Follow WHERE userFollowId = #{id} AND userId = #{followerId}")
-    Long selectFollow(Integer id, Integer followerId);
+    Long selectFollow(Long id, Long followerId);
 
     @Select("select  userId from Follow where userFollowId=#{userId}")
-    List<Integer> selectFollowers(Integer userId);
+    List<Long> selectFollowers(Long userId);
+
+    List<Long> selectCommonFollow(Long id, Long userId);
 }
 
 

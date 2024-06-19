@@ -3,8 +3,10 @@ package project.test.xface.service;
 import cn.dev33.satoken.util.SaResult;
 import project.test.xface.entity.dto.Result;
 import project.test.xface.entity.dto.UserLoginDTO;
-import project.test.xface.entity.pojo.User;
 import project.test.xface.entity.pojo.UserInfo;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author XiaoMing
@@ -15,21 +17,31 @@ public interface UserService {
 
     Result loginByMes(UserLoginDTO userLoginDTO);
 
-    Result sendCode(String phonenum);
+    Result sendCode(String phoneNum,Integer lou);
 
     Result loginByPsw(UserLoginDTO userLoginDTO);
 
-    Result updateUser(User user);
+    Result updateUserPSW(String password);
 
-    Result deleteUser(Integer id);
+    Result updateUserPhone(String code,String phoneNum);
+
+    Result deleteUser(Long id);
 
     Result checkMyself();
 
-    void exitUser();
+    Result exitUser(HttpServletRequest request, HttpServletResponse response);
 
-    SaResult updateMyself(UserInfo userInfo);
+    Result updateMyself(UserInfo userInfo);
 
-    Result follow(Integer id,Boolean isFollow);
+    Result follow(Long id,Boolean isFollow);
 
-    Result isFollow(Integer id);
+    Result isFollow(Long id);
+
+    Result followCommon(Long userId);
+
+    Result startOrStop(Long id, Integer status);
+
+    Result updateRole(Long id, String role);
+
+    Result checkUserInfo(Long id);
 }

@@ -29,7 +29,7 @@ public class AutoFillAspect {
     {
         String value = autoFill.value();
         UserDTO userDTO = UserHolder.getUser();
-        Integer userDTOId = userDTO.getId();
+        Long userDTOId = userDTO.getId();
         LogHistory logHistory=new LogHistory();
         logHistory.setId(userDTOId);
         logHistory.setOperationType(value);

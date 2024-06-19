@@ -57,7 +57,7 @@ public class BlogController {
 
 
     /**
-     * 查看blog
+     * 查看blog todo:分页
      */
     @GetMapping("/listBlog/{id}")
     public Result listBlog(@PathVariable Integer id){
@@ -101,5 +101,17 @@ public class BlogController {
             return Result.fail("不能为空");
         return blogService.createComment(comment) ;
     }
+    /**
+     * todo：数字字典，blog分类管理员添加
+     */
+
+    /**
+     * 删除
+     */
+    @DeleteMapping("/delteBlog")
+    public Result deleteBlog(Integer id){
+      return  blogService.deleteBlog(id);
+    }
+
 
 }

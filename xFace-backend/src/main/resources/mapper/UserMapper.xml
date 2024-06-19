@@ -6,26 +6,14 @@
 
 
 
-    <sql id="User_Column_List">
-        id
-        ,username,password,
-        phoneNum,role,status,
-        avatar,createTime,updateTime
-    </sql>
-    <sql id="UserVO_Column_List">
-        id
-        ,username,password,
-        phoneNum,role,status,
-        avatar,createTime,updateTime
-    </sql>
 
-    <insert id="save"  useGeneratedKeys="true" keyProperty="id">
-        insert into User (username,password,phoneNum,avatar) values
-        (#{username},#{password},#{phoneNum},#{avatar})
+    <insert id="save"  >
+        insert into User (username,password,phoneNum,avatar,id) values
+        (#{username},#{password},#{phoneNum},#{avatar},#{id})
     </insert>
 
     <insert id="createProfile" >
-      insert into UserInfo (userId,userName) values (#{id},#{userName})
+      insert into UserInfo (userId,userName) values (#{userId},#{userName})
 
     </insert>
     <insert id="follow">
@@ -35,9 +23,6 @@
     <update id="updateUser">
         update User
         <set>
-            <if test="username!=null">
-                username=#{username},
-            </if>
             <if test="password!=null">
                 password=#{password},
             </if>
@@ -50,17 +35,61 @@
             <if test="status!=null">
                 status=#{status},
             </if>
-            <if test="avatar!=null">
-                avatar=#{avatar},
-            </if>
         </set>
         where id=#{id}
     </update>
 
-    <select id="getUserById" resultMap="UserVOResultMap">
+    <update id="updateMyself">
+        update UserInfo
+        <set>
+            <if test="city!=null">
+                city=#{city},
+            </if>
+            <if test="birthDay!=null">
+                birthDay=#{birthDay},
+            </if>
+            <if test="hobby!=null">
+                hobby=#{hobby},
+            </if>
+            <if test="userName!=null">
+                userName=#{userName},
+            </if>
+            <if test="mail!=null">
+                mail=#{mail},
+            </if>
+            <if test="avatar!=null">
+                avatar=#{avatar},
+            </if>
+            <if test="gender!=null">
+                gender=#{gender},
+            </if>
+            <if test="age!=null">
+                age=#{age},
+            </if>
+            <if test="introduce!=null">
+                introduce=#{introduce},
+            </if>
+            <if test="fans!=null">
+                fans=#{fans},
+            </if>
+            <if test="followee!=null">
+                followee=#{followee},
+            </if>
+        </set>
+          where userId=#{userId}
+    </update>
+
+    <select id="getUserById" >
         SELECT
-        <include refid="UserVO_Column_List"/>
+           (avatar,id,createTime,phonNum,role,status,updateTime,username)
         FROM User
         WHERE id = #{id}
+    </select>
+
+    <select id="selectCommonFollow"  >
+        select distinct a.userFollowId from ((select * from Follow where userId = #{id}) as a
+            inner join
+                (select * from Follow where userId = #{userId}) as b
+                                                )where a.userFollowId=b.userFollowId
     </select>
 </mapper>

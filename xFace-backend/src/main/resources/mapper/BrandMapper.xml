@@ -11,4 +11,27 @@
         ,name,createTime,
         updateTime,location,score
     </sql>
+    <insert id="addBrand">
+        insert into Brand (id,name,location,type_id,images)
+        values(#{id},#{name},#{location},#{typeId},#{images})
+    </insert>
+    <update id="updateById" >
+        update Brand
+        <set>
+            <if test="name!=null" >
+                   name=#{name},
+            </if>
+            <if test="location!=null">
+                location=#{location},
+            </if>
+            <if test="typeId!=null">
+                type_id=#{typeId},
+            </if>
+            <if test="images!=null">
+                 images=#{images},
+            </if>
+
+        </set>
+         where id=#{id}
+    </update>
 </mapper>

@@ -29,4 +29,6 @@ public interface BlogService {
     Result queryFollowBlog(Long max, Integer offset);
 
     Result createComment(Comment comment);
+
+    Result deleteBlog(Integer id);
 }

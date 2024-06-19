@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -18,11 +19,11 @@ public class Diary implements Serializable {
     /**
      * 日记id
      */
-    private Integer id;
+    private Long id;
     /**
      * 用户id
      */
-    private Integer userid;
+    private Long userid;
     /**
      * 日记类型
      */
@@ -38,11 +39,11 @@ public class Diary implements Serializable {
     /**
      * 创建时间
      */
-    private Date createtime;
+    private LocalDateTime createtime;
     /**
      * 更新时间
      */
-    private Date updatetime;
+    private LocalDateTime updatetime;
     /**
      * 隐私：先定为公开可见或者仅群内可见或者仅自己可见
      */

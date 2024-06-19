@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -18,11 +19,11 @@ public class Groupmember implements Serializable {
     /**
      * 群组id
      */
-    private Integer groupid;
+    private Long groupid;
     /**
      * 用户id
      */
-    private Integer userid;
+    private Long userid;
     /**
      * 群组状态 0-正常 1-禁用等
      */
@@ -30,11 +31,11 @@ public class Groupmember implements Serializable {
     /**
      * 创建时间
      */
-    private Date createtime;
+    private LocalDateTime createtime;
     /**
      * 更新时间
      */
-    private Date updatetime;
+    private LocalDateTime updatetime;
     /**
      * 群内昵称
      */

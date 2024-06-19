@@ -1,5 +1,8 @@
 package project.test.xface.utils;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriUtils;
 
 import java.io.BufferedReader;
@@ -15,11 +18,23 @@ import java.net.URLConnection;
  * 查询全国省市  by baidu api
  */
 
-public class BaiduMapUtils {
-    public static String URL= "https://api.map.baidu.com/api_region_search/v1/?";
 
-    public static String AK="46r3lr0SYcPqtRebOfl832TWNA1CZ2sr";
-        /**
+@Component
+@Data
+@AllArgsConstructor
+public class BaiduMapUtils {
+
+
+    public static String URL;
+
+    public static String AK;
+
+    public BaiduMapUtils(String URL,String AK) {
+        this.URL=URL;
+        this.AK=AK;
+    }
+
+    /**
          * 默认ak
          * 选择了ak，使用IP白名单校验：
          * 根据您选择的AK已为您生成调用代码
@@ -27,6 +42,8 @@ public class BaiduMapUtils {
          * 您的IP白名单中的IP非公网IP，请设置为公网IP，否则将请求失败
          * 请在IP地址为0.0.0.0/0 外网IP的计算发起请求，否则将请求失败
          */
+
+
         public void requestGetAK(String strUrl, Map<String, String> param) throws Exception {
             if (strUrl == null || strUrl.length() <= 0 || param == null || param.size() <= 0) {
                 return;

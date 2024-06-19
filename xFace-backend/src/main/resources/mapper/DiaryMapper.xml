@@ -12,4 +12,8 @@
         title,content,createTime,
         updateTime,visible
     </sql>
+    <insert id="addDiary">
+        insert into Diary (userId,typeId,title,content,visible)
+        values (#{userId},#{typeId},#{title},#{content},#{visible})
+    </insert>
 </mapper>

@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+
+/**
+ * 什么情况下用fail？success返回false？
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

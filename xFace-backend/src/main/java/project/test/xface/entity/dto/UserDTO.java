@@ -1,8 +1,12 @@
 package project.test.xface.entity.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
     /**
      * 用户名
@@ -11,7 +15,7 @@ public class UserDTO {
     /**
      * 用户唯一标识
      */
-    private Integer id;
+    private Long id;
     /**
      * 手机号码
      */

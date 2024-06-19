@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -18,11 +19,11 @@ public class Friendship implements Serializable {
     /**
      * 用户id
      */
-    private Integer userid;
+    private Long userid;
     /**
      * 好友id
      */
-    private Integer friendid;
+    private Long friendid;
     /**
      * 好友名称
      */
@@ -42,11 +43,11 @@ public class Friendship implements Serializable {
     /**
      * 创建时间
      */
-    private Date createtime;
+    private LocalDateTime createtime;
     /**
      * 更新时间
      */
-    private Date updatetime;
+    private LocalDateTime updatetime;
 
     @Override
     public boolean equals(Object that) {

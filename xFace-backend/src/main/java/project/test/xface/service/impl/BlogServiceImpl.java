@@ -50,15 +50,15 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Result createBlog(Blog blog) {
         UserDTO userDTO = UserHolder.getUser();
-        Integer userid = userDTO.getId();
+        Long userid = userDTO.getId();
         blog.setUserid(userid);
         boolean isSuccess=blogMapper.addBlog(blog);
         if(!isSuccess) return Result.fail("新增失败");
         //feed流给粉丝发
-        List<Integer> followersId = userMapper.selectFollowers(userid);
-        for(Integer followerId:followersId) {
+        List<Long> followersId = userMapper.selectFollowers(userid);
+        for(Long followerId:followersId) {
             String key = FollowerUser_Feed_Key + followerId;
-           stringRedisTemplate.opsForZSet().add(key,blog.getId().toString(),System.currentTimeMillis());
+           stringRedisTemplate.opsForZSet().add(key, String.valueOf(blog.getId()),System.currentTimeMillis());
         }
         return Result.success(blog.getId());
     }
@@ -93,18 +93,18 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public SaResult likeBlog(Integer id) {
         UserDTO userDTO = UserHolder.getUser();
-        Integer userId = userDTO.getId();
+        long userId = userDTO.getId();
         String key = Like_Blog_Key + id;
-        Double score = stringRedisTemplate.opsForZSet().score(key, userId.toString());
+        Double score = stringRedisTemplate.opsForZSet().score(key, userId);
         if (score == null) {
             boolean isSuccess = blogMapper.likeBlog(id); //like加一
             if (isSuccess)
-                stringRedisTemplate.opsForZSet().add(key, userId.toString(), System.currentTimeMillis());
+                stringRedisTemplate.opsForZSet().add(key, String.valueOf(userId), System.currentTimeMillis());
         }   //没点过赞
         else {
              boolean isSuccess = blogMapper.dislikeBlog(id);   //点赞取消
             if (isSuccess)
-                stringRedisTemplate.opsForZSet().remove(key, userId.toString());
+                stringRedisTemplate.opsForZSet().remove(key, userId);
         }
         return ResultUtils.success("ok");
     }
@@ -173,12 +173,25 @@ public class BlogServiceImpl implements BlogService {
     public Result createComment(Comment comment) {
         UserDTO user = UserHolder.getUser();
         if(StringUtils.isEmpty(comment.toString())) return Result.fail("不能为空");
-        Integer userId = user.getId();
+        Long userId = user.getId();
         comment.setUserId(userId);
         if(comment.getBlogId().equals(null)) return  Result.fail("不能为空");
         boolean isSuccess=commentMapper.addComment(comment);
        if(!isSuccess) return Result.fail("评论未成功");
         return Result.success();
+    }
+
+    @Override
+    public Result deleteBlog(Integer id) {
+        //有没有评论
+        List<Comment> comments = blogMapper.selectComment(id);
+        for(Comment comment:comments){
+            Long commentId = comment.getId();
+        boolean isSuccess= commentMapper.delete(commentId); //同时删除子评论
+        if(isSuccess==false) return Result.fail("删除失败");
+        }
+        boolean isSuccess = blogMapper.deleteById(id);
+        return Result.success(isSuccess);
     }
 
     /**
@@ -194,7 +207,7 @@ public class BlogServiceImpl implements BlogService {
     private void isLiked(Blog blog){
         UserDTO userDTO = UserHolder.getUser();
         if(userDTO==null) return ;
-        Integer id = userDTO.getId();
+        Long id = userDTO.getId();
         String key=Like_Blog_Key+blog.getId();
         Double score = stringRedisTemplate.opsForZSet().score(key,id.toString());
         blog.setLiked(score!=null);

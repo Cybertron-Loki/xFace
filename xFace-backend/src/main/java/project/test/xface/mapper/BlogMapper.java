@@ -1,6 +1,7 @@
 package project.test.xface.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Delete;
 import project.test.xface.entity.pojo.Blog;
 import project.test.xface.entity.pojo.BlogType;
 import project.test.xface.entity.pojo.Comment;
@@ -26,6 +27,10 @@ public interface BlogMapper extends BaseMapper<Blog> {
 
     @Select("select * from Comment where  blogId=#{blogId}")
     List<Comment> selectComment(Integer blogId);
+
+
+    @Delete("delete from Diary where id=#{id}")
+    boolean deleteById(Integer id);
 }
 
 

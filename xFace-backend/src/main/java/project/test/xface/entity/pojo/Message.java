@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -18,7 +19,7 @@ public class Message implements Serializable {
     /**
      * 消息id
      */
-    private Integer id;
+    private Long id;
     /**
      * 会话id 私聊/群聊
      */
@@ -26,11 +27,11 @@ public class Message implements Serializable {
     /**
      * 发送者id
      */
-    private Integer senderid;
+    private Long senderid;
     /**
      * 接收者id 空为群聊信息，非空为私聊信息
      */
-    private Integer receiverid;
+    private Long receiverid;
     /**
      * 消息内容
      */
@@ -42,7 +43,7 @@ public class Message implements Serializable {
     /**
      *
      */
-    private Date createtime;
+    private LocalDateTime createtime;
 
     @Override
     public boolean equals(Object that) {
