@@ -16,4 +16,10 @@
         insert into Diary (userId,typeId,title,content,visible)
         values (#{userId},#{typeId},#{title},#{content},#{visible})
     </insert>
+    <select id="selectAll" resultType="project.test.xface.entity.vo.DiaryTypeVO">
+--         SELECT (a.userId, a.id AS typeId, a.type, b.id AS diaryId, b.title,b.createTime,
+--                 b.updateTime)
+--         FROM DiaryType a
+--                  JOIN Diary b ON a.id = b.typeId
+    </select>
 </mapper>

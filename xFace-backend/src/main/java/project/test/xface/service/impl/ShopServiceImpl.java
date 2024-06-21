@@ -5,6 +5,8 @@ import cn.hutool.core.bean.copier.CopyOptions;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import project.test.xface.entity.dto.Result;
@@ -19,6 +21,7 @@ import project.test.xface.mapper.ProductsMapper;
 import project.test.xface.mapper.ShopMapper;
 import project.test.xface.service.ShopService;
 import project.test.xface.utils.RedisWorker;
+
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -40,6 +43,7 @@ public class ShopServiceImpl implements ShopService {
     private StringRedisTemplate stringRedisTemplate;
     @Override
     public Result checkShops() {
+        //查缓存
         List<Shop> shops=shopMapper.listShops();
         return Result.success(shops);
     }
@@ -68,10 +72,13 @@ public class ShopServiceImpl implements ShopService {
                                     }
                                 }
                         ));
+        //就这么存吧我懒得删了
         stringRedisTemplate.opsForHash().putAll(SHOPVO_KEY + id, brandMap2);
         stringRedisTemplate.expire(SHOPVO_KEY + id, SHOPVO_KEY_TTL, TimeUnit.DAYS);
         return Result.success(shopVO);
     }
+
+
 
     @Override
     public Result addShop(Shop shop) {
@@ -82,6 +89,8 @@ public class ShopServiceImpl implements ShopService {
         if(isSuccess==true) return Result.success();
         return Result.fail("添加失败");
     }
+
+
 
     @Override
     public Result deleteShop(Long id) {
@@ -94,6 +103,7 @@ public class ShopServiceImpl implements ShopService {
         return Result.success();
     }
 
+
     @Override
     public Result updateShop(Shop shop) {
         if(StringUtils.isEmpty(shop.toString())) return Result.fail("更新失败");
@@ -101,7 +111,7 @@ public class ShopServiceImpl implements ShopService {
         if(isSuccess==false) return Result.fail("更新失败");
         return Result.success();
     }
-
+    //这里可以考虑存缓存，可能比较值得
     @Override
     public Result checkShopsByCategory(BlogType blogType) {
         //先查缓存

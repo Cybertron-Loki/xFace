@@ -74,4 +74,5 @@ public class BrandController {
     {
         return brandService.updateBrand(brand);
     }
+
 }

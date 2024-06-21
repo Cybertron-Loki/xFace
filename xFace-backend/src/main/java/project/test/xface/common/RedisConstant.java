@@ -39,4 +39,7 @@ public class RedisConstant {
 
     public  final static Long SHOPVO_KEY_TTL=90L;
 
+    public  final static String Diary_ID="diary id:";
+
+    public  final static String DiaryType_Key_ID="diaryType id:";
 }

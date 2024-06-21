@@ -10,11 +10,13 @@ import project.test.xface.entity.pojo.Diary;
 public interface DiaryService {
     Result createDiary(Diary diary);
 
-    Result checkDiaries(Integer userId);
+    Result checkDiaries(Long userId, Long visitorId);
 
-    Result checkDiary(Integer dairyId);
+    Result checkDiary(Long dairyId, Long userId, Long visitorId);
 
     Result createComment(Comment comment);
 
-    Result deleteDiary(Integer id);
+    Result deleteDiary(Long id);
+
+    Result deleteComment(Long id);
 }

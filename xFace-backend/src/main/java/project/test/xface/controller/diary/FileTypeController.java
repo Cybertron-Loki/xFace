@@ -9,7 +9,8 @@ import project.test.xface.entity.pojo.DiaryType;
 import project.test.xface.service.FileTypeService;
 
 /**
- * 增，删，改，查
+ * 增，删，改，查 ,存入了缓存
+ * todo:groupId只写了一个，没用数组表示，后续再改
  */
 
 @RestController
@@ -18,9 +19,13 @@ public class FileTypeController {
     @Autowired
     private FileTypeService fileTypeService;
 
+    /**
+     * 用户自己查询自己的diaryFile
+     * @return
+     */
     @GetMapping("/select")
-    public Result selectFileType(){
-        return   fileTypeService.selectType();
+    public Result selectFileType(Long id){
+        return   fileTypeService.selectType(id);
     }
 
     @DeleteMapping("/{id}")

@@ -112,6 +112,11 @@ public class BlogController {
     public Result deleteBlog(Integer id){
       return  blogService.deleteBlog(id);
     }
-
+    /**
+     * 删除blog评论
+     */
+    /**
+     * 查shop/brand关键词搜相关blog
+     */
 
 }

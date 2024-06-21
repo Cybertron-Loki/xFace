@@ -4,12 +4,24 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import project.test.xface.entity.pojo.DiaryType;
+import project.test.xface.entity.vo.DiaryTypeVO;
+
+import java.util.List;
 
 @Mapper
 public interface FileTypeMapper {
     @Select("select  * from DiaryType where userId=#{id}")
-    DiaryType selectByUserId(Long id);
+    List<DiaryType> selectByUserId(Long id);
 
     @Delete("delete from DiaryType where id=#{id}")
-    void deleteById(Long id);
+    boolean deleteById(Long id);
+
+    boolean addType(DiaryType diaryType);
+
+    boolean updateFile(DiaryType diaryType);
+
+    List<DiaryType> checkPublic(Long userId, String visible);
+
+
+//    List<Long> checkIfVisible(Long userId);
 }

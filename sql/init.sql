@@ -154,14 +154,18 @@ CREATE TABLE `Blog`
     `createTime` DATETIME              DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updateTime` DATETIME              DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `type`       VARCHAR(255) NOT NULL COMMENT 'blog类型',
-    `visible`    VARCHAR(255) NOT NULL DEFAULT 'public' COMMENT '隐私：personal 个人可见;public 任何人都可以看;group 群内成员可见',
+    `visible`    VARCHAR(255) NOT NULL DEFAULT 'public' COMMENT '隐私：personal 个人可见;public 任何人都可以看',
     `content`    TEXT         NOT NULL COMMENT 'blog内容',
-#   `brand_id`   INT(11)      NOT NULL COMMENT '关联商家id（可不填）',
+    `brand_id`    bigint(64)       COMMENT '关联品牌id（可不填）',
+    `shop_id`     bigint(64)       COMMENT '关联商家id（可不填）',
+    `products_id` bigint(64)        COMMENT '关联产品id（可不填）',
     `location`   VARCHAR(255) COMMENT '所在位置',
     `group_id`   bigint(64) COMMENT '群组id(可见范围，可以让哪个群看到）',
     `like`       INT(11)               DEFAULT 0 COMMENT '点赞数',
     `title`      VARCHAR(255) NOT NULL COMMENT '标题',
     `images`     VARCHAR(255) NOT NULL COMMENT '图片',
+    `avatar`     VARCHAR(255) NOT NULL COMMENT '用户头像',
+    `userName`   VARCHAR(255) NOT NULL COMMENT '用户名字',
     PRIMARY KEY (`id`),
 #     FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`) ON DELETE CASCADE,
     FOREIGN KEY (`group_id`) REFERENCES `Group` (`id`)
@@ -186,6 +190,7 @@ CREATE TABLE `Type_Blog`
 (
     `id`   int(11)     NOT NULL AUTO_INCREMENT COMMENT 'type的id',
     `name` VARCHAR(255) NOT NULL comment '种类名称',
+    `images`  VARCHAR(255) NOT NULL comment '图片',
     primary key (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -235,7 +240,10 @@ CREATE TABLE `DiaryType`
     `type`       VARCHAR(255) NOT NULL DEFAULT '默认',
     `createTime` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updateTime` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `visible`    VARCHAR(255) NOT NULL DEFAULT 'public',
+#     `group_id`   bigint(64)   COMMENT '群id',
     primary key (`id`)
+#     foreign key (`group_id`) references `Group`(`id`)
 )   ENGINE = InnoDB
     AUTO_INCREMENT = 1
     DEFAULT CHARSET = utf8 COMMENT = '个人展示页表';

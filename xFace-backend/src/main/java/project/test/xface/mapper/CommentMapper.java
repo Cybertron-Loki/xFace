@@ -1,10 +1,11 @@
 package project.test.xface.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import project.test.xface.entity.pojo.Comment;
+
+import java.util.List;
 
 /**
  * @author XiaoMing
@@ -18,8 +19,14 @@ public interface CommentMapper  {
     boolean addComment(Comment comment);
 
 
-   @Delete("delete from Comment where id=#{commentId} and parentId=#{commentId}")
+   @Delete("delete from Comment where id=#{commentId} ")
     Boolean delete(Long commentId);
+
+
+   @Select("select * from Comment where diaryId=#{diaryId}")
+    List<Comment> selectByDiaryId(Long diaryId);
+
+
 }
 
 

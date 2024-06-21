@@ -164,5 +164,8 @@ public class UserController {
     //todo：清除缓存
     private void cleanCache(String key){
     }
+    /**
+     * 游客
+     */
 
 }
