@@ -5,8 +5,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.ZSetOperations;
 import project.test.xface.common.ResultUtils;
 import project.test.xface.entity.dto.ScrollResult;
+import project.test.xface.entity.pojo.Diary;
 import project.test.xface.mapper.BlogMapper;
 import project.test.xface.mapper.CommentMapper;
+import project.test.xface.mapper.DiaryMapper;
 import project.test.xface.mapper.UserMapper;
 import project.test.xface.entity.dto.Result;
 import project.test.xface.entity.dto.UserDTO;
@@ -43,6 +45,8 @@ public class BlogServiceImpl implements BlogService {
     private UserMapper userMapper;
     @Autowired
     private CommentMapper commentMapper;
+    @Autowired
+    private DiaryMapper diaryMapper;
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
@@ -192,6 +196,18 @@ public class BlogServiceImpl implements BlogService {
         }
         boolean isSuccess = blogMapper.deleteById(id);
         return Result.success(isSuccess);
+    }
+
+    @Override
+    public Result deleteComment(Long commentId, Long userId) {
+        //todo:有点麻烦:验证身份是否是blog主/评论主
+       Comment comment= commentMapper.selectById(commentId);
+        Diary diary = diaryMapper.selectById(comment.getDiaryId());
+        if(comment.getUserId().equals(userId)||diary.getUserid().equals(userId)){
+            Boolean delete = commentMapper.delete(commentId);
+            if(delete) return Result.success();
+        }
+        return Result.fail("删除失败");
     }
 
     /**

@@ -26,7 +26,8 @@ public interface CommentMapper  {
    @Select("select * from Comment where diaryId=#{diaryId}")
     List<Comment> selectByDiaryId(Long diaryId);
 
-
+  @Select("select * from Blog where commentId=#{commentId}")
+    Comment selectById(Long commentId);
 }
 
 

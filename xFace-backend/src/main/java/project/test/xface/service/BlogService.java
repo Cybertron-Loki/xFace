@@ -31,4 +31,6 @@ public interface BlogService {
     Result createComment(Comment comment);
 
     Result deleteBlog(Integer id);
+
+    Result deleteComment(Long commentId, Long userId);
 }

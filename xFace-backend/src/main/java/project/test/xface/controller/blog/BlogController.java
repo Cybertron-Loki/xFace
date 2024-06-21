@@ -115,6 +115,10 @@ public class BlogController {
     /**
      * 删除blog评论
      */
+    @DeleteMapping("/deleteComment")
+    public Result deleteComment(Long commentId,Long userId){
+        return blogService.deleteComment(commentId,userId);
+    }
     /**
      * 查shop/brand关键词搜相关blog
      */
