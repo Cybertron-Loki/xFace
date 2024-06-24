@@ -1,21 +1,22 @@
 package project.test.xface.service.impl;
 
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import project.test.xface.common.PageResult;
 import project.test.xface.entity.dto.Result;
-import project.test.xface.entity.dto.UserDTO;
 import project.test.xface.entity.pojo.Diary;
 import project.test.xface.entity.pojo.DiaryType;
 import project.test.xface.mapper.DiaryMapper;
 import project.test.xface.mapper.FileTypeMapper;
 import project.test.xface.service.FileTypeService;
 import project.test.xface.utils.RedisWorker;
-import project.test.xface.utils.UserHolder;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,10 +38,13 @@ public class FileTypeServiceImpl implements FileTypeService {
 
     @Cacheable(cacheNames="fileType",key="#id")
     @Override
-    public Result selectType(Long id) {
-       List<DiaryType> diaryType= fileTypeMapper.selectByUserId(id);
+    public Result selectType(Long id, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+       Page<DiaryType> diaryType= fileTypeMapper.selectByUserId(id);
+       List<DiaryType> results=diaryType.getResult();
+       long total=diaryType.getTotal();
        if(StringUtils.isEmpty(diaryType.toString())) return Result.success(null);
-        return Result.success(diaryType);
+        return Result.success(new PageResult(total,results));
     }
 
 

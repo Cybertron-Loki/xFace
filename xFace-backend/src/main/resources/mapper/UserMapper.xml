@@ -86,7 +86,8 @@
         WHERE id = #{id}
     </select>
 
-    <select id="selectCommonFollow"  >
+
+        <select id="selectCommonFollow"    resultType="java.lang.Long" >
         select distinct a.userFollowId from ((select * from Follow where userId = #{id}) as a
             inner join
                 (select * from Follow where userId = #{userId}) as b

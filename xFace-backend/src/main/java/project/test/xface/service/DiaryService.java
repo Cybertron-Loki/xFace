@@ -10,7 +10,7 @@ import project.test.xface.entity.pojo.Diary;
 public interface DiaryService {
     Result createDiary(Diary diary);
 
-    Result checkDiaries(Long userId, Long visitorId);
+    Result checkDiaries(Long userId, Long visitorId, Integer pageNum, Integer pageSize);
 
     Result checkDiary(Long dairyId, Long userId, Long visitorId);
 

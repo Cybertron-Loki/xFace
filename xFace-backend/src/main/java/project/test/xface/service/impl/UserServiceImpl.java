@@ -1,10 +1,14 @@
 package project.test.xface.service.impl;
 
-import cn.dev33.satoken.util.SaResult;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.util.RandomUtil;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import project.test.xface.common.PageResult;
 import project.test.xface.common.ResultUtils;
 import project.test.xface.mapper.UserMapper;
 import project.test.xface.entity.dto.Result;
@@ -300,7 +304,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result followCommon(Long userId) {
+    public Result followCommon(Long userId, Integer pageNum, Integer pageSize) {
         UserDTO user = UserHolder.getUser();
         if(StringUtils.isEmpty(user.toString())) return Result.fail("用户不能为空");
         Long id = user.getId();
@@ -313,13 +317,16 @@ public class UserServiceImpl implements UserService {
 ////        List<UserDTO> collect = users.stream()
 ////                .map(user -> BeanUtil.copyProperties(user, UserDTO.class))
 ////                .collect(Collectors.toList());
+        PageHelper.startPage(pageNum,pageSize);
         List<Long> followCommonIds=userMapper.selectCommonFollow(id,userId);
+        PageInfo<Long> pageInfo=new PageInfo<>(followCommonIds);
+        long total=pageInfo.getTotal();
         List<UserVO> commonFollow=new ArrayList<>(followCommonIds.size()); //不加长度行不行
        for(Long followCommonId : followCommonIds){
            UserVO userVO = userMapper.getUserById(followCommonId);
            commonFollow.add(userVO);
        }
-        return Result.success(commonFollow);
+        return Result.success(new PageResult(total,commonFollow));
 
     }
 

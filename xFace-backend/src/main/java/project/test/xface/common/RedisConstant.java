@@ -42,4 +42,6 @@ public class RedisConstant {
     public  final static String Diary_ID="diary id:";
 
     public  final static String DiaryType_Key_ID="diaryType id:";
+
+    public  final static String Group_ID_Key="groupId key:";
 }

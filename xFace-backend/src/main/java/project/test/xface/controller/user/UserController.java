@@ -136,11 +136,11 @@ public class UserController {
     }
 
     /**
-     * 共同关注
+     * 共同关注,分页
      */
     @GetMapping("/followCommon/{id}")
-    public Result followCommon(@PathVariable("id") Long userId){
-        return userService.followCommon(userId);
+    public Result followCommon(@PathVariable("id") Long userId ,Integer pageNum, Integer pageSize){
+        return userService.followCommon(userId,pageNum,pageSize);
     }
 
 

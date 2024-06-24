@@ -1,16 +1,33 @@
 package project.test.xface.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.pagehelper.Page;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Select;
 import project.test.xface.entity.pojo.Group;
 
-/**
- * @author XiaoMing
- * @description 针对表【Group(群聊信息表)】的数据库操作Mapper
- * @createDate 2024-06-05 20:48:03
- * @Entity ming.test.xface.enity.pojo.Group
- */
-public interface GroupMapper extends BaseMapper<Group> {
 
+public interface GroupMapper  {
+
+    @Select("select count(*) from Group where creatorId=#{userId} ")
+    Integer checkNumber(Long userId);
+
+    boolean addGroup(Group group);
+
+    @Select("select headerId from Group where groupId=#{groupId}")
+    Long checkGroupHeader(Long groupId);
+
+
+    @Delete("delete from Group where id=#{groupId}")
+    boolean deleteGroup(Long groupId);
+
+    boolean update(Group group);
+
+    @Select("select * from Group where id=#{id}")
+    Group selectById(Long id);
+
+
+    @Select("select * from Group where name like concat('%',name,'%')")
+    Page<Group> selectByName(String name);
 }
 
 

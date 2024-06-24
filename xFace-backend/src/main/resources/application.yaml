@@ -102,3 +102,8 @@ baidu:
     URL: https://api.map.baidu.com/api_region_search/v1/?
 
 
+alioss:
+  endpoint: oss-cn-guangzhou.aliyuncs.com
+  access-key-id: LTAI5tLAoQgVc9zkdz7xa2Rq
+  bucket-name: sky-project-01
+  access-key-secret: XY0Q63nfpVZo05V1TYb8SPbIquguoZ

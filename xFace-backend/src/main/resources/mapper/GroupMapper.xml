@@ -11,4 +11,28 @@
         status,createTime,updateTime,
         type
     </sql>
+    <insert id="addGroup">
+        insert into Group (id,name,creatorId,status,type)
+        values(#{id},#{name},#{creatorId},#{status},#{type})
+    </insert>
+    <update id="update">
+        update Group
+        <set>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="headerId!=null">
+                headerId=#{headerId},
+            </if>
+            <if test="type!=null">
+                type=#{type},
+            </if>
+            <if test="name!=null">
+                name=#{name}
+            </if>
+        </set>
+        where groupId=#{groupId} and userId=#{userId}
+    </update>
+
+
 </mapper>

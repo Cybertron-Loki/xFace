@@ -16,7 +16,8 @@ CREATE TABLE `User`
     `avatar`     varchar(255)  COMMENT '用户头像',
     `createTime` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updateTime` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    PRIMARY KEY (id)
+    `avatar`      varchar(128) NOT NULL DEFAULT'u',
+        PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT = '用户表';
 
@@ -49,7 +50,9 @@ CREATE TABLE `Group`
     `status`     int(11)      NOT NULL DEFAULT 0 COMMENT '群组状态 0-正常 1-禁用等',
     `createTime` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updateTime` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `type`       INT(11)      NOT NULL default 0 COMMENT '族群类别，默认0-朋友群，1-家庭群，2-同事群 ...',
+    `type`       INT(11)      NOT NULL  COMMENT '族群类别，默认0-朋友群，1-家庭群，2-同事群 ...',
+     `memberNumber` INT(11)   NOT NULL DEFAULT 0 COMMENT '群人数',
+    `headerId`   bigint(64)      NOT NULL COMMENT '群主id',
     PRIMARY KEY (`id`),
     FOREIGN KEY (`creatorId`) REFERENCES `User` (`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB
@@ -66,6 +69,7 @@ CREATE TABLE `GroupMember`
     `createTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updateTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `nickName`   VARCHAR(255) COMMENT '群内昵称',
+    `role`       VARCHAR(255) NOT NULL DEFAULT 'user' comment '普通用户',
     PRIMARY KEY (`groupId`, `userId`),
     FOREIGN KEY (`groupId`) REFERENCES `Group` (`id`) ON DELETE CASCADE,
     FOREIGN KEY (`userId`) REFERENCES `User` (`id`) ON DELETE CASCADE

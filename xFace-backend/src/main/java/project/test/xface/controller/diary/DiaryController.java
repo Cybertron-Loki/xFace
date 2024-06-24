@@ -51,9 +51,9 @@ public class DiaryController {
      * @return
      */
     @GetMapping("/checkDairies")
-    public Result checkDiaries(Long userId,Long visitorId){
+    public Result checkDiaries(Long userId,Long visitorId,Integer pageNum, Integer pageSize){
 
-        return diaryService.checkDiaries(userId,visitorId);
+        return diaryService.checkDiaries(userId,visitorId,pageNum,pageSize);
     }
 
     /**

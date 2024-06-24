@@ -1,9 +1,12 @@
 package project.test.xface.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.test.xface.common.PageResult;
 import project.test.xface.entity.dto.Result;
 import project.test.xface.entity.dto.UserDTO;
 import project.test.xface.entity.pojo.Comment;
@@ -49,26 +52,56 @@ public class DiaryServiceImpl implements DiaryService {
      *
      * @param userId
      * @param visitorId
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     @Override
-    public Result checkDiaries(Long userId, Long visitorId) {
-        //todo：访客信息，是否为好友
-        //如果是好友，直接返回可见日记（privacy不可以）
-        String visible=null;
-        //自己，全部返回,(因为是按照分类返回的，所以不能两个表联查）
-        if(1==1) {
-            List<DiaryTypeVO> diaries=new ArrayList<>();
-            List<DiaryType> diaryTypes=fileTypeMapper.selectByUserId(userId);
-            for(DiaryTypeVO diaryTypeVO:diaries) {
-                for (DiaryType diaryType : diaryTypes) {
-                    List<Diary> diaryList = diaryMapper.selectByType(diaryType.getId());
-                    diaryTypeVO.setDiaries(diaryList);
-                    diaryTypeVO.setDiaryType(diaryType);
-                }
+    public Result checkDiaries(Long userId, Long visitorId, Integer pageNum, Integer pageSize) {
+//        if(1==1) {
+//            PageHelper.startPage(pageNum,pageSize);
+//            List<DiaryTypeVO> diaries=new ArrayList<>();
+//            Page<DiaryType> diaryTypes=fileTypeMapper.selectByUserId(userId);
+//            long total=diaryTypes.getTotal();
+//            List<DiaryType> result = diaryTypes.getResult();
+//            for(DiaryTypeVO diaryTypeVO:diaries) {
+//                for (DiaryType diaryType : diaryTypes) {
+//                    List<Diary> diaryList = diaryMapper.selectByType(diaryType.getId());
+//                    diaryTypeVO.setDiaries(diaryList);
+//                    diaryTypeVO.setDiaryType(diaryType);
+//                }
+//            }
+//
+//            return Result.success(new PageResult(total,result));
+//        }
+        // ToDo: 访客信息，是否为好友
+        // 如果是好友，直接返回可见日记（privacy不可以）
+        String visible = null;
+
+        // 自己，全部返回 (因为是按照分类返回的，所以不能两个表联查)
+        if (userId.equals(visitorId)) {
+            // 开始分页
+            PageHelper.startPage(pageNum, pageSize);
+
+            // 查询用户的日记分类
+            Page<DiaryType> diaryTypesPage = fileTypeMapper.selectByUserId(userId);
+            long total = diaryTypesPage.getTotal();
+            List<DiaryType> diaryTypes = diaryTypesPage.getResult();
+
+            // 准备存储结果的列表
+            List<DiaryTypeVO> diaries = new ArrayList<>();
+
+            for (DiaryType diaryType : diaryTypes) {
+                DiaryTypeVO diaryTypeVO = new DiaryTypeVO();
+                List<Diary> diaryList = diaryMapper.selectByType(diaryType.getId());
+                diaryTypeVO.setDiaries(diaryList);
+                diaryTypeVO.setDiaryType(diaryType);
+                diaries.add(diaryTypeVO);
             }
-                return Result.success(diaries);
-        }
+
+            // 包装分页结果并返回
+            return Result.success(new PageResult(total, diaries));
+    }
         else if(1==2){
             visible="friends";
         }
@@ -79,18 +112,37 @@ public class DiaryServiceImpl implements DiaryService {
             /*
             直接返回type diary(title) 查看详细内容需要再请求不然数据量大
              */
-        List<DiaryTypeVO> diaries=new ArrayList<>();
-        List<DiaryType> diaryTypes=fileTypeMapper.checkPublic(userId,visible);
-        for(DiaryTypeVO diaryTypeVO:diaries){
-        for (DiaryType diaryType : diaryTypes) {
-            List<Diary> diaryList = diaryMapper.selectByType(diaryType.getId());
-                diaryTypeVO.setDiaries(diaryList);
-                diaryTypeVO.setDiaryType(diaryType);
-        }
-        }
-        return Result.success(diaries);
+//        List<DiaryTypeVO> diaries=new ArrayList<>();
+//        List<DiaryType> diaryTypes=fileTypeMapper.checkPublic(userId,visible);
+//        for(DiaryTypeVO diaryTypeVO:diaries){
+//        for (DiaryType diaryType : diaryTypes) {
+//            List<Diary> diaryList = diaryMapper.selectByType(diaryType.getId());
+//                diaryTypeVO.setDiaries(diaryList);
+//                diaryTypeVO.setDiaryType(diaryType);
+//        }
+//        }
+        // 开始分页
+        PageHelper.startPage(pageNum, pageSize);
 
-            }
+        // 查询用户的日记分类
+        Page<DiaryType> diaryTypes=fileTypeMapper.checkPublic(userId,visible);
+        long total = diaryTypes.getTotal();
+        List<DiaryType> result = diaryTypes.getResult();
+
+        // 准备存储结果的列表
+        List<DiaryTypeVO> diaries = new ArrayList<>();
+
+        for (DiaryType diaryType : diaryTypes) {
+            DiaryTypeVO diaryTypeVO = new DiaryTypeVO();
+            List<Diary> diaryList = diaryMapper.selectByType(diaryType.getId());
+            diaryTypeVO.setDiaries(diaryList);
+            diaryTypeVO.setDiaryType(diaryType);
+            diaries.add(diaryTypeVO);
+        }
+
+        // 包装分页结果并返回
+        return Result.success(new PageResult(total, diaries));
+    }
 
 
 

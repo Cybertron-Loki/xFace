@@ -24,8 +24,8 @@ public class FileTypeController {
      * @return
      */
     @GetMapping("/select")
-    public Result selectFileType(Long id){
-        return   fileTypeService.selectType(id);
+    public Result selectFileType(Long id,Integer pageNum, Integer pageSize){
+        return   fileTypeService.selectType(id,pageNum,pageSize);
     }
 
     @DeleteMapping("/{id}")

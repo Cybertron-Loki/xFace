@@ -1,6 +1,5 @@
 package project.test.xface.service;
 
-import cn.dev33.satoken.util.SaResult;
 import project.test.xface.entity.dto.Result;
 import project.test.xface.entity.dto.UserLoginDTO;
 import project.test.xface.entity.pojo.UserInfo;
@@ -37,7 +36,7 @@ public interface UserService {
 
     Result isFollow(Long id);
 
-    Result followCommon(Long userId);
+    Result followCommon(Long userId, Integer pageNum, Integer pageSize);
 
     Result startOrStop(Long id, Integer status);
 

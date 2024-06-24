@@ -11,4 +11,32 @@
         ,userId,status,
         createTime,updateTime,nickName
     </sql>
+    <insert id="addUser">
+        insert into GroupMember (groupId,userId,role)
+        values (#{id},#{creatorId},#{role})
+    </insert>
+
+    <update id="update">
+        update Groupmember
+        <set>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="nickName!=null">
+                nickName=#{nickName},
+            </if>
+            <if test="role!=null">
+                role=#{role},
+            </if>
+        </set>
+        where groupId=#{groupId} and userId=#{userId}
+    </update>
+
+    <select id="listGroups" resultType="project.test.xface.entity.pojo.Group">
+        select a.role,b.id,b.name,b.status,b.type
+        from GroupMember a
+        join Group b on
+        a.groupId=b.id
+        where a.userId=#{userId}
+        </select>
 </mapper>

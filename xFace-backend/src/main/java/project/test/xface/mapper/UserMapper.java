@@ -83,6 +83,8 @@ public interface UserMapper extends BaseMapper<User> {
     List<Long> selectFollowers(Long userId);
 
     List<Long> selectCommonFollow(Long id, Long userId);
+
+
 }
 
 
