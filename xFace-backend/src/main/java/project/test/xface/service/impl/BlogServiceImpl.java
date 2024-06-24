@@ -3,7 +3,6 @@ package project.test.xface.service.impl;
 import cn.dev33.satoken.util.SaResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.ZSetOperations;
-import project.test.xface.common.ResultUtils;
 import project.test.xface.entity.dto.ScrollResult;
 import project.test.xface.entity.pojo.Diary;
 import project.test.xface.mapper.BlogMapper;
