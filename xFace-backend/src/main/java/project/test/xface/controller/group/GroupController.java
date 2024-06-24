@@ -68,12 +68,13 @@ public class GroupController {
     }
 
     /**
-     * 改群名
+     * 改群名,类型,群头像
      */
-    @PutMapping("/groupName")
-    public Result updateName(@RequestBody GroupDTO groupDTO) {
-        return groupService.updateName(groupDTO);
+    @PutMapping("/group")
+    public Result update(@RequestBody GroupDTO groupDTO) {
+        return groupService.update(groupDTO);
     }
+
 
     /**
      * 改状态(管理员）
@@ -83,16 +84,11 @@ public class GroupController {
         return groupService.updateStatus(group);
     }
 
-    /**
-     * 改类型
-     */
-    @PutMapping("/type")
-    public Result updateType(@RequestBody GroupDTO groupDTO) {
-        return groupService.updateType(groupDTO);
-    }
+
+
 
     /**
-     * 根据userId显示群列表,分页
+     * 根据userId显示群列表,分页,todo:可以存缓存
      **/
     @GetMapping("/groups")
     public Result listGroups(Long userId, Integer pageNum, Integer pageSize) {
@@ -122,14 +118,6 @@ public class GroupController {
     @GetMapping("/groupName")
     public Result selectByName(@PathVariable("groupName") String name, Integer pageNum, Integer pageSize) {
         return groupService.selectByName(name, pageNum, pageSize);
-    }
-
-    /**
-     * 修改群头像
-     */
-    @PutMapping("/avatar")
-    public Result updateAvatar(@RequestBody GroupDTO groupDTO) {
-        return groupService.updateAvatar(groupDTO);
     }
 
     /**

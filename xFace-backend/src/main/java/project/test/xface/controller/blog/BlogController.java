@@ -2,7 +2,6 @@ package project.test.xface.controller.blog;
 
 import cn.dev33.satoken.util.SaResult;
 import org.apache.commons.lang3.StringUtils;
-import project.test.xface.common.ResultUtils;
 import project.test.xface.entity.dto.Result;
 import project.test.xface.entity.pojo.Blog;
 import project.test.xface.entity.pojo.Comment;
@@ -69,8 +68,8 @@ public class BlogController {
      * @return
      */
     @GetMapping("/like/{blogId}")
-    public SaResult likeBlog(@PathVariable("blogId") Integer id){
-        return ResultUtils.success(blogService.likeBlog(id));
+    public Result likeBlog(@PathVariable("blogId") Integer id){
+        return Result.success(blogService.likeBlog(id));
     }
 
     /**

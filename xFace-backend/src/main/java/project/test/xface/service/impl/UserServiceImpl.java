@@ -9,7 +9,6 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import project.test.xface.common.PageResult;
-import project.test.xface.common.ResultUtils;
 import project.test.xface.mapper.UserMapper;
 import project.test.xface.entity.dto.Result;
 import project.test.xface.entity.dto.UserDTO;

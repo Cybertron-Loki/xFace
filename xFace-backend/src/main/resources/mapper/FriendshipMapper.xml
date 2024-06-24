@@ -11,4 +11,22 @@
         friendNickName,friendStatus,status,
         createTime,updateTime
     </sql>
+    <update id="update">
+        update Friendship
+        <set>
+            <if test="friendName!=null">
+                friendName=#{friendName},
+            </if>
+        <if test="friendNickName!=null">
+            friendNickName=#{friendNickName},
+        </if>
+        <if test="friendStatus!=null">
+            friendStatus=#{friendStatus},
+        </if>
+        <if test="status!=null">
+            status=#{status}
+        </if>
+        </set>
+        where userId=#{userId} and friendId=#{friendId}
+    </update>
 </mapper>

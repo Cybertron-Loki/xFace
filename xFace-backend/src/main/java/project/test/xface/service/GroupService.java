@@ -19,11 +19,9 @@ public interface GroupService {
 
     Result updateHeader(GroupDTO groupDTO);
 
-    Result updateName(GroupDTO groupDTO);
 
     Result updateStatus(Group group);
 
-    Result updateType(GroupDTO groupDTO);
 
     Result listGroups(Long userId, Integer pageNum, Integer pageSize);
 
@@ -33,9 +31,10 @@ public interface GroupService {
 
     Result selectByName(String name, Integer pageNum, Integer pageSize);
 
-    Result updateAvatar(GroupDTO groupDTO);
 
     Result updateNickName(Groupmember groupmember);
 
     Result deleteGroup(GroupDTO groupDTO);
+
+    Result update(GroupDTO groupDTO);
 }

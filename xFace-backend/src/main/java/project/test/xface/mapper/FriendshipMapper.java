@@ -1,6 +1,9 @@
 package project.test.xface.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.pagehelper.Page;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Select;
 import project.test.xface.entity.pojo.Friendship;
 
 /**
@@ -9,8 +12,21 @@ import project.test.xface.entity.pojo.Friendship;
  * @createDate 2024-06-05 20:48:03
  * @Entity ming.test.xface.enity.pojo.Friendship
  */
-public interface FriendshipMapper extends BaseMapper<Friendship> {
+public interface FriendshipMapper  {
 
+
+    @Select("select * from Friendship where userId=#{userId}")
+    Page<Friendship> selectById(Long userId);
+
+    void update(Friendship friendship);
+
+
+    @Delete("delete from Friendship where userId=#{userId} and friendId=#{friendId}")
+    void delete(Friendship friendship);
+
+
+    @Select("select * from FriendShip where userId=#{userId} and friendId=#{friendId}")
+    boolean checkIfFriend(Friendship friendship);
 }
 
 

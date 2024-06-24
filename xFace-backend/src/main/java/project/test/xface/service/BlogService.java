@@ -20,7 +20,7 @@ public interface BlogService {
 
     Result typeList();
 
-    SaResult likeBlog(Integer id);
+    Result likeBlog(Integer id);
 
     Blog listBlog(Integer id);
 

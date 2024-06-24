@@ -81,6 +81,16 @@ public class GroupServiceImpl implements GroupService {
         return Result.fail("删除失败");
     }
 
+    @Override
+    public Result update(GroupDTO groupDTO) {
+        String role = groupDTO.getRole();
+        if(!role.equals("Header"))  return Result.fail("无权限");
+        Group group = new Group();
+        BeanUtils.copyProperties(groupDTO,group);
+        groupMapper.update(group);
+        return Result.success();
+    }
+
     @Transactional
     @Override
     public Result kickMember(GroupDTO groupDTO) {
@@ -127,15 +137,15 @@ public class GroupServiceImpl implements GroupService {
         return Result.success();
     }
 
-    @Override
-    public Result updateName(GroupDTO groupDTO) {
-        String role = groupDTO.getRole();
-        if(!role.equals("Header"))  return Result.fail("无权限");
-        Group group = new Group();
-        BeanUtils.copyProperties(groupDTO,group);
-        groupMapper.update(group);
-        return Result.success();
-    }
+//    @Override
+//    public Result updateName(GroupDTO groupDTO) {
+//        String role = groupDTO.getRole();
+//        if(!role.equals("Header"))  return Result.fail("无权限");
+//        Group group = new Group();
+//        BeanUtils.copyProperties(groupDTO,group);
+//        groupMapper.update(group);
+//        return Result.success();
+//    }
 
     @Override
     public Result updateStatus(Group group) {
@@ -146,15 +156,6 @@ public class GroupServiceImpl implements GroupService {
         return Result.success();
     }
 
-    @Override
-    public Result updateType(GroupDTO groupDTO) {
-        String role = groupDTO.getRole();
-        if (!role.equals("Header") )  return Result.fail("无权限");
-        Group group = new Group();
-        BeanUtils.copyProperties(groupDTO,group);
-        groupMapper.update(group);
-        return Result.success();
-    }
 
     @Override
     public Result listGroups(Long userId, Integer pageNum, Integer pageSize) {
@@ -202,15 +203,6 @@ public class GroupServiceImpl implements GroupService {
         return Result.success(new PageResult(total,results));
     }
 
-    @Override
-    public Result updateAvatar(GroupDTO groupDTO) {
-        String role = groupDTO.getRole();
-        if (!role.equals("Header") )  return Result.fail("无权限");
-        Group group = new Group();
-        BeanUtils.copyProperties(groupDTO,group);
-        groupMapper.update(group);
-        return Result.success();
-    }
 
     @Override
     public Result updateNickName(Groupmember groupmember) {

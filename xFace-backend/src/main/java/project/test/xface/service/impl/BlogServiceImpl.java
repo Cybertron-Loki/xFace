@@ -95,7 +95,7 @@ public class BlogServiceImpl implements BlogService {
      * @return
      */
     @Override
-    public SaResult likeBlog(Integer id) {
+    public Result likeBlog(Integer id) {
         UserDTO userDTO = UserHolder.getUser();
         long userId = userDTO.getId();
         String key = Like_Blog_Key + id;
@@ -110,7 +110,7 @@ public class BlogServiceImpl implements BlogService {
             if (isSuccess)
                 stringRedisTemplate.opsForZSet().remove(key, userId);
         }
-        return ResultUtils.success("ok");
+        return Result.success("ok");
     }
 
     /**
@@ -179,9 +179,9 @@ public class BlogServiceImpl implements BlogService {
         if(StringUtils.isEmpty(comment.toString())) return Result.fail("不能为空");
         Long userId = user.getId();
         comment.setUserId(userId);
-        if(comment.getBlogId().equals(null)) return  Result.fail("不能为空");
+        if(comment.getBlogId()==null) return  Result.fail("不能为空");
         boolean isSuccess=commentMapper.addComment(comment);
-       if(!isSuccess) return Result.fail("评论未成功");
+       if(!isSuccess){ return Result.fail("评论未成功");}
         return Result.success();
     }
 
@@ -192,7 +192,7 @@ public class BlogServiceImpl implements BlogService {
         for(Comment comment:comments){
             Long commentId = comment.getId();
         boolean isSuccess= commentMapper.delete(commentId); //同时删除子评论
-        if(isSuccess==false) return Result.fail("删除失败");
+        if(isSuccess) return Result.fail("删除失败");
         }
         boolean isSuccess = blogMapper.deleteById(id);
         return Result.success(isSuccess);
