@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.test.xface.mapper.FriendshipMapper">
+
+
+    <sql id="Base_Column_List">
+        userId
+        ,friendId,friendName,
+        friendNickName,friendStatus,status,
+        createTime,updateTime
+    </sql>
+    <insert id="addFriends">
+        insert into FriendShip (userId,friendId) values (#{userId},#{friendId})
+    </insert>
+    <update id="update">
+        update Friendship
+        <set>
+            <if test="friendName!=null">
+                friendName=#{friendName},
+            </if>
+        <if test="friendNickName!=null">
+            friendNickName=#{friendNickName},
+        </if>
+        <if test="friendStatus!=null">
+            friendStatus=#{friendStatus},
+        </if>
+        <if test="status!=null">
+            status=#{status}
+        </if>
+        </set>
+        where userId=#{userId} and friendId=#{friendId}
+    </update>
+</mapper>

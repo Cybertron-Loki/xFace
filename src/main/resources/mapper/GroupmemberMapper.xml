@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.test.xface.mapper.GroupmemberMapper">
+
+
+
+    <sql id="Base_Column_List">
+        groupId
+        ,userId,status,
+        createTime,updateTime,nickName
+    </sql>
+    <insert id="addUser">
+        insert into GroupMember (groupId,userId,role)
+        values (#{id},#{creatorId},#{role})
+    </insert>
+
+    <update id="update">
+        update Groupmember
+        <set>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="nickName!=null">
+                nickName=#{nickName},
+            </if>
+            <if test="role!=null">
+                role=#{role},
+            </if>
+        </set>
+        where groupId=#{groupId} and userId=#{userId}
+    </update>
+
+    <select id="listGroups" resultType="project.test.xface.entity.pojo.Group">
+        select a.role,b.id,b.name,b.status,b.type
+        from GroupMember a
+        join Group b on
+        a.groupId=b.id
+        where a.userId=#{userId}
+        </select>
+</mapper>

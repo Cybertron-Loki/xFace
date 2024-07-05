@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.test.xface.mapper.DiaryMapper">
+
+
+
+    <sql id="Base_Column_List">
+        id
+        ,userId,type,
+        title,content,createTime,
+        updateTime,visible
+    </sql>
+    <insert id="addDiary">
+        insert into Diary (userId,typeId,title,content,visible)
+        values (#{userId},#{typeId},#{title},#{content},#{visible})
+    </insert>
+    <select id="selectAll" resultType="project.test.xface.entity.vo.DiaryTypeVO">
+--         SELECT (a.userId, a.id AS typeId, a.type, b.id AS diaryId, b.title,b.createTime,
+--                 b.updateTime)
+--         FROM DiaryType a
+--                  JOIN Diary b ON a.id = b.typeId
+    </select>
+    <select id="selectById" resultType="project.test.xface.entity.pojo.Diary"></select>
+</mapper>

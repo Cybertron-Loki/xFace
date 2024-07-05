@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="project.test.xface.mapper.FileTypeMapper">
+    <insert id="addType">
+      insert into DiaryType (id,userId,type,visible)
+      values(#{id},#{userId},#{type},#{visible})
+    </insert>
+  <update id="updateFile">
+      update DiaryFile
+      <set>
+          <if test="visible!=null">
+              visible=#{visible},
+          </if>
+          <if test="type!=null">
+              type=#{type},
+          </if>
+      </set>
+      where
+          id=#{id}
+
+  </update>
+    <select id="checkIfVisible" resultType="List">
+        select id from DiaryType where
+            visible='public' and userId=#{userId}
+    </select>
+
+        <select id="checkPublic" resultType="project.test.xface.entity.pojo.DiaryType">
+--         SELECT (a.userId, a.id AS typeId, a.type, b.id AS diaryId, b.title,b.createTime,
+--                b.updateTime)
+--         FROM DiaryType a
+--                  JOIN Diary b ON a.id = b.typeId
+--         WHERE a.visible = #{visible} and b.visible=#{visible};
+      select * from DiaryType where userId=#{userId} and visible=#{visible}
+    </select>
+</mapper>

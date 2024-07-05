@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="project.test.xface.mapper.CollectionMapper">
+
+
+    <insert id="add">
+        insert into Collection (id,userId,name) values (#{id},#{userId},#{name})
+    </insert>
+    <update id="modify">
+        update Collection
+        <set>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+        </set>
+        where userId=#{userId}
+    </update>
+        <delete id="deleteByIds">
+<!--        delete a,b from Collection a join Collection_Reflection b-->
+<!--               on a.id=b.collectionId-->
+<!--               in-->
+<!--               <foreach collection="ids" separator="," item="id" close=")" open="(" >-->
+<!--                   a.id=#{id} and b.collectionId=#{id}-->
+<!--               </foreach>-->
+
+       delete from Collection where userId=#{userId} and id in
+        <foreach collection="ids" open="(" close=")" item="id" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteReflection">
+        delete from Collection_Reflection where userId=#{userId} collectionId in
+        <foreach collection="ids" open="(" close=")" item="id" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

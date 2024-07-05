@@ -1,0 +1,99 @@
+# 自定义配置
+#mysql:
+#  ip: localhost
+#  port: 3306
+#  database: xface
+#  username: root
+#  password: 123456
+redis:
+  ip: localhost
+  port: 6379
+  password: 123456
+  database: 1
+
+
+spring:
+  # 数据库配置
+  datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/$xface?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+        username: root
+        password: 123456
+
+  #  application:
+  #    name: Demo
+  #  profiles:
+  #    active: dev
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # session 配置
+  session:
+    # todo 取消注释开启分布式 session（须先配置 Redis）
+    # store-type: redis
+    # 30 天过期
+    timeout: 2592000
+
+
+  # 文件上传
+  servlet:
+    multipart:
+      # 大小限制
+      max-file-size: 10MB
+  rabbitmq:
+    host: 192.168.247.131
+    port: 5672
+    username: ss
+    password: 123321
+#  data:
+#    redis:
+#      database: ${redis.database}
+#      port: 6379
+#      password:
+server:
+  address: localhost
+  port: 8080
+  servlet:
+    #    context-path: /api
+    # cookie 30 天过期
+    session:
+      cookie:
+        max-age: 2592000
+
+
+mybatis:
+  mapperLocations: classpath:mapper/*
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+logging:
+  level:
+    project.test.xface.mapper: debug
+
+
+
+# 接口文档配置
+knife4j:
+  enable: true
+  openapi:
+    title: "接口文档"
+    version: 1.0
+    group:
+      default:
+        api-rule: package
+        api-rule-resources:
+
+baidu:
+  map:
+    ak: 46r3lr0SYcPqtRebOfl832TWNA1CZ2sr
+    URL: https://api.map.baidu.com/api_region_search/v1/?
+
+
+alioss:
+  endpoint: oss-cn-guangzhou.aliyuncs.com
+  access-key-id: LTAI5tLAoQgVc9zkdz7xa2Rq
+  bucket-name: sky-project-01
+  access-key-secret: XY0Q63nfpVZo05V1TYb8SPbIquguoZ
+
+

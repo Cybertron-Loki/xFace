@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.test.xface.mapper.UserMapper">
+
+
+
+
+    <insert id="save"  >
+        insert into User (username,password,phoneNum,avatar,id) values
+        (#{username},#{password},#{phoneNum},#{avatar},#{id})
+    </insert>
+
+    <insert id="createProfile" >
+      insert into UserInfo (userId,userName) values (#{userId},#{userName})
+
+    </insert>
+    <insert id="follow">
+        insert into Follow  (userId,userFollowId) values (#{userId},#{userFollowId})
+    </insert>
+
+    <update id="updateUser">
+        update User
+        <set>
+            <if test="password!=null">
+                password=#{password},
+            </if>
+            <if test="phoneNum!=null">
+                phoneNum=#{phoneNum},
+            </if>
+            <if test="role!=null">
+                 role=#{role},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <update id="updateMyself">
+        update UserInfo
+        <set>
+            <if test="city!=null">
+                city=#{city},
+            </if>
+            <if test="birthDay!=null">
+                birthDay=#{birthDay},
+            </if>
+            <if test="hobby!=null">
+                hobby=#{hobby},
+            </if>
+            <if test="userName!=null">
+                userName=#{userName},
+            </if>
+            <if test="mail!=null">
+                mail=#{mail},
+            </if>
+            <if test="avatar!=null">
+                avatar=#{avatar},
+            </if>
+            <if test="gender!=null">
+                gender=#{gender},
+            </if>
+            <if test="age!=null">
+                age=#{age},
+            </if>
+            <if test="introduce!=null">
+                introduce=#{introduce},
+            </if>
+            <if test="fans!=null">
+                fans=#{fans},
+            </if>
+            <if test="followee!=null">
+                followee=#{followee},
+            </if>
+        </set>
+          where userId=#{userId}
+    </update>
+    <delete id="deleteById"></delete>
+
+    <select id="getUserById" >
+        SELECT
+           (avatar,id,createTime,phonNum,role,status,updateTime,username)
+        FROM User
+        WHERE id = #{id}
+    </select>
+
+
+        <select id="selectCommonFollow"    resultType="java.lang.Long" >
+        select distinct a.userFollowId from ((select * from Follow where userId = #{id}) as a
+            inner join
+                (select * from Follow where userId = #{userId}) as b
+                                                )where a.userFollowId=b.userFollowId
+    </select>
+    <select id="selectById" resultType="project.test.xface.entity.pojo.User"></select>
+</mapper>

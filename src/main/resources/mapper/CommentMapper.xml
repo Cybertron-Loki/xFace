@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.test.xface.mapper.CommentMapper">
+
+    <sql id="Base_Column_List">
+        id
+        ,userId,diaryId,
+        parentId,content,createTime,
+        updateTime
+    </sql>
+    <insert id="addComment" >
+        insert into Comment (userId,diaryId,parentId,content,blogId)
+        values (#{userId},#{diaryId},#{parentId},#{content},#{blogId})
+    </insert>
+
+</mapper>

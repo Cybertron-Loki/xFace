@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.test.xface.mapper.ProductsMapper">
+    <insert id="addProducts">
+        insert into Products (id,shopId,brandId,images)
+        values(#{id},#{shopId},#{brandId},#{images})
+    </insert>
+    <update id="updateProducts">
+        update Products
+        <set>
+            <if test="shopId!=null">
+                shopId=#{shopId},
+            </if>
+            <if test="brandId!=null">
+                brandId=#{brandId},
+            </if>
+            <if test="images!=null">
+                images=#{images}
+            </if>
+        </set>
+        <where>id=#{id}</where>
+    </update>
+    <delete id="deleteProducts">
+        delete from Products where id =#{id}
+    </delete>
+
+    <select id="selectBlogs" resultType="project.test.xface.entity.vo.BlogVO">
+        select id,userId,type,`like`,title,images from Blog
+            <where>
+            products_id=#{id} and visible = 'public' and group_id in
+            <foreach collection="ranges" separator="," item="range"
+                     close=")" open="(" >
+                #{range}
+            </foreach>
+            </where>
+    </select>
+
+    <select id="selectBlogsAll" resultType="project.test.xface.entity.vo.BlogVO">
+        select id,userId,type,`like`,title,images from Blog
+        <where>
+            products_id=#{id} and visible = 'public'
+        </where>
+    </select>
+</mapper>
