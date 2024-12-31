@@ -45,13 +45,31 @@ public class ShopServiceImpl implements ShopService {
     public Result checkShops() {
         //查缓存
         List<Shop> shops=shopMapper.listShops();
+        //放缓存
+        
         return Result.success(shops);
     }
 
     @Override
+    public Result getShopType()
+    {
+        List<String> types=stringRedisTemplate.opsForList().range(TYPE_KEY,0.-1);
+        //查缓存
+         if (types != null && !types.isEmpty()) {
+        return Result.success(types);
+    }
+        //查数据库
+        types=shopMapper.checkShopType();
+        if (types != null && !types.isEmpty()) {
+        stringRedisTemplate.opsForList().rightPushAll(TYPE_KEY, types);
+        stringRedisTemplate.expire(TYPE_KEY, TYPE_KEY_TTL, TimeUnit.WEEKS);
+        }
+        return Result.success(types);
+    }
+    @Override
     public Result checkById(Long id) {
         //先查缓存
-        Map<Object, Object> brandMap1 = stringRedisTemplate.opsForHash().entries(SHOPVO_KEY + id);
+        Map<Object, Object> brandMap1 = stringRedisTemplate.opsForList().entries(SHOPVO_KEY + id);
         ShopVO shopVO = BeanUtil.fillBeanWithMap(brandMap1, new ShopVO(), false);
         if (StringUtils.isEmpty(shopVO.toString()))
             return Result.success(shopVO);
