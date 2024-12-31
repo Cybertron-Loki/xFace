@@ -22,4 +22,6 @@ public interface ShopService {
     Result checkShopsByCategory(BlogType blogType);
 
     Result checkByName(String name);
+
+    Result getShopType();
 }
