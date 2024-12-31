@@ -74,4 +74,10 @@ public class ShopController {
         return shopService.checkShopsByCategory(blogType);
     }
 
+     /**
+     *查询所有shoptype（缓存），几乎不动
+     */
+     @GetMapping("/getShopType")
+     private Result getShopType(){
+          return shopService.getShopType();
 }
