@@ -31,7 +31,7 @@ import static project.test.xface.utils.BaiduMapUtils.AK;
 import static project.test.xface.utils.BaiduMapUtils.URL;
 
 /**
- * @author XiaoMing
+ * 
  * @description 针对表【blog(帖子表)】的数据库操作Service实现
  * @createDate 2024-06-05 20:48:03
  */
